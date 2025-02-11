@@ -12,8 +12,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/matches', async (req, res) => {
+    console.log("Demande de matchs");
     try {
         const matches = await db.getMatches();  // Utiliser la méthode getMatches
+        console.log("<"+matches.length+"> matchs trouvés");
         res.json(matches);  // Renvoyer les matchs sous forme de JSON
     } catch (error) {
         console.error(error);

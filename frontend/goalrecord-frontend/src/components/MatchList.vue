@@ -2,8 +2,8 @@
   <div>
     <h1>Liste des matchs</h1>
     <ul>
-      <li v-for="match in matches" :key="match.id">
-        Match {{ match.id }} : {{ match.score }}
+      <li v-for="match in matches" :key="match.idmatch">
+        Match {{ match.idmatch }} : {{ match.scoreequipea }} - {{ match.scoreequipeb }}
       </li>
     </ul>
   </div>
@@ -19,11 +19,15 @@ export default {
     }
   },
   mounted() {
+
     axios.get('http://localhost:3000/api/matches')  // Remplace par ton endpoint
         .then(response => {
+          console.log("Matchs : ");
+          console.log(this);
           this.matches = response.data;
         })
         .catch(error => {
+          console.log("Erreur : ");
           console.log(this);
           console.error("Il y a une erreur lors de la récupération des matchs", error);
         });

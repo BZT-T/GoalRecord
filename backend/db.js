@@ -1,9 +1,8 @@
 const { Pool } = require('pg');
-require('dotenv').config();  // Charge les variables d'environnement
+require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 
 class DB {
     constructor() {
-        console.log("MDP : "+process.env.DB_PASSWORD);
         this.pool = new Pool({
             user: process.env.DB_USER,
             host: process.env.DB_HOST,
@@ -18,8 +17,8 @@ class DB {
         try {
             const result = await this.pool.query(`
                 SELECT m.idMatch, m.dateMatch, m.lieuMatch, m.scoreEquipeA, m.scoreEquipeB, s.nom AS saison
-                FROM "Match" m
-                JOIN "Saison" s ON m.idSaison = s.idSaison
+                FROM "match" m
+                JOIN "saison" s ON m.idSaison = s.idSaison
                 ORDER BY m.dateMatch DESC
             `);
             return result.rows;  // Retourne les résultats
