@@ -81,7 +81,7 @@ export default {
 
 .match-date {
   text-align: center;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: bold;
   padding-bottom: 10px;
 }
@@ -93,14 +93,6 @@ export default {
   flex-direction: row; /* Alignement horizontal des éléments */
 }
 
-.team {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-}
-
 .team-a {
   padding-right: 10px;
   border-right: 1px solid #ddd;
@@ -108,12 +100,13 @@ export default {
 
 .team-b {
   padding-left: 10px;
+  border-left: 1px solid #ddd;
 }
 
 .players {
   display: flex; /* Mettre les joueurs sur une ligne */
   flex-direction: row; /* Horizontalement */
-  font-size: 25px;
+  font-size: 18px;
   margin-bottom: 5px;
 }
 
