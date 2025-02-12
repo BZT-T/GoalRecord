@@ -32,11 +32,24 @@ export default {
 </script>
 
 <style scoped>
+/* Style de base, commun à toutes les saisons */
 .header {
-  background-color: #333;
-  color: white;
   text-align: center;
-  padding: 15px;
+  padding: 20px;
   font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.header h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.header p {
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-top: 0;
 }
 </style>

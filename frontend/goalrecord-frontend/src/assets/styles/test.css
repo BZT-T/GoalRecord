@@ -1,12 +1,107 @@
-body {
-    background-color: #1e3a8a; /* Bleu foncé */
-    color: white;
-    font-family: 'Arial', sans-serif;
+/* saison1.css */
+
+/* Couleurs générales */
+:root {
+    --primary-color: #228B22; /* Vert du terrain de football */
+    --secondary-color: #f8c200; /* Jaune des panneaux publicitaires */
+    --accent-color: #d32f2f; /* Rouge pour les moments intenses */
+    --background-color: #8bd88b; /* Arrière-plan général */
 }
-.season-title {
-    font-size: 2rem;
-    text-align: center;
-    background: linear-gradient(45deg, #ff0000, #ffa500);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+
+/* Corps de la page */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+}
+
+/* saison1.css - Styles pour la saison 1 (thème football) */
+
+/* L'image de fond, la couleur, et le style de police seront uniques à cette saison */
+.header {
+    background: url('background.jpg') no-repeat center center;
+    background-size: cover;
+    color: #fff;
+}
+
+.header h1 {
+    font-size: 3.5rem; /* Taille de police personnalisée pour cette saison */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Effet de texte pour le titre */
+}
+
+.header p {
+    font-size: 1.3rem;
+}
+
+/* Bar de navigation */
+nav {
+    background-color: var(--secondary-color);
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav li {
+    margin: 0 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+nav a:hover {
+    color: var(--accent-color);
+}
+
+/* Liste des matchs */
+.match-list {
+    margin: 20px auto;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.match-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.match-list li {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+}
+
+.match-list li:hover {
+    background-color: var(--accent-color);
+    cursor: pointer;
+}
+
+/* Effets dynamiques et animations */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+button:hover {
+    animation: bounce 0.5s ease;
+    background-color: var(--secondary-color);
 }
