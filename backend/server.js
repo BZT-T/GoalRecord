@@ -23,6 +23,18 @@ app.get('/api/matches', async (req, res) => {
     }
 });
 
+app.get('/api/saison-actuelle', async (req, res) => {
+    console.log("Demande de la saison actuelle");
+    try {
+        const saison = await db.getSaisonActuelle();
+        console.log("Saison actuelle : "+saison.nom);
+        res.json(saison);
+    } catch (error) {
+        console.error('Erreur lors de la récupération de la saison actuelle:', error);
+        res.status(500).json({ error: 'Erreur interne du serveur' });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });

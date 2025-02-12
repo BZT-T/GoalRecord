@@ -59,6 +59,18 @@ class DB {
             throw new Error('Erreur lors de l\'ajout du match');
         }
     }
+
+    async getSaisonActuelle() {
+        try {
+            const result = await this.pool.query(
+                `SELECT * FROM Saison WHERE enCours = true LIMIT 1`
+            );
+            return result.rows[0] || { nom: "Aucune saison en cours", anneeDebut: "", anneeFin: "" };
+        } catch (error) {
+            console.error("Erreur lors de la récupération de la saison actuelle :", error);
+            throw error;
+        }
+    }
 }
 
 module.exports = new DB();  // Exporte une instance de la classe
