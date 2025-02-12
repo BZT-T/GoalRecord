@@ -3,30 +3,34 @@
     <div v-for="match in matches" :key="match.idmatch" class="match-card" :class="{'winner': match.scoreequipea > match.scoreequipeb}">
       <div class="match-date">{{ new Date(match.datematch).toLocaleDateString() }}</div>
       <div class="match-card-body">
+        <!-- Score équipe A -->
         <div class="team team-a">
-          <div class="players">
-            <p v-for="(player, index) in match.teamAPlayers" :key="index">{{ player }}</p>
-          </div>
-          <div class="score">
-            <p>{{ match.scoreequipea }}</p>
-          </div>
+          <div class="score">{{ match.scoreequipea }}</div>
         </div>
+
+        <!-- Nom des joueurs équipe A (horizontalement) -->
+        <div class="players team-a-players">
+          <p v-for="(player, index) in match.teamAPlayers" :key="index">{{ player }}</p>
+        </div>
+
+        <!-- Séparateur VS -->
+        <div class="vs-separator">VS</div>
+
+        <!-- Nom des joueurs équipe B (horizontalement) -->
+        <div class="players team-b-players">
+          <p v-for="(player, index) in match.teamBPlayers" :key="index">{{ player }}</p>
+        </div>
+
+        <!-- Score équipe B -->
         <div class="team team-b">
-          <div class="players">
-            <p v-for="(player, index) in match.teamBPlayers" :key="index">{{ player }}</p>
-          </div>
-          <div class="score">
-            <p>{{ match.scoreequipeb }}</p>
-          </div>
+          <div class="score">{{ match.scoreequipeb }}</div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-
 <script>
-
 export default {
   data() {
     return {
@@ -47,74 +51,46 @@ export default {
           scoreequipea: 1,
           scoreequipeb: 3
         }
-        // Ajoute d'autres matchs ici
       ]
     };
   }
 }
-
 </script>
 
-<!--<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      matches: []
-    }
-  },
-  mounted() {
-
-    axios.get('http://localhost:3000/api/matches')  // Remplace par ton endpoint
-        .then(response => {
-          console.log("Matchs : ");
-          console.log(this);
-          this.matches = response.data;
-        })
-        .catch(error => {
-          console.log("Erreur : ");
-          console.log(this);
-          console.error("Il y a une erreur lors de la récupération des matchs", error);
-        });
-  }
-}
-</script>
--->
 <style scoped>
 .match-container {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
+  width: 100%;
 }
 
 .match-card {
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  width: 300px; /* Largeur de la carte */
-  height: auto; /* Hauteur de la carte */
+  width: 100%; /* Occupe toute la largeur de l'espace disponible */
+  height: auto;
   border-radius: 5px;
   background-color: #fff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 5px;
+  padding: 15px;
   transition: transform 0.3s;
   cursor: pointer;
+  margin-bottom: 10px;
 }
 
 .match-date {
-  text-align: center; /* Centrer le texte horizontalement */
+  text-align: center;
   font-size: 14px;
   font-weight: bold;
-  padding-bottom: 5px;
+  padding-bottom: 10px;
 }
 
 .match-card-body {
   display: flex;
-}
-
-.match-card:hover {
-  transform: scale(1.05); /* Agrandir un peu la carte au survol */
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row; /* Alignement horizontal des éléments */
 }
 
 .team {
@@ -135,21 +111,29 @@ export default {
 }
 
 .players {
-  font-size: 12px;
+  display: flex; /* Mettre les joueurs sur une ligne */
+  flex-direction: row; /* Horizontalement */
+  font-size: 25px;
   margin-bottom: 5px;
 }
 
 .players p {
-  margin: 3px 0;
+  margin: 3px 5px; /* Espacement horizontal entre les joueurs */
 }
 
 .score {
-  font-size: 18px;
+  font-size: 28px;
   font-weight: bold;
 }
 
-.score p {
-  margin: 0;
+.vs-separator {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  padding: 0 15px;
 }
 
+.match-card:hover {
+  transform: scale(1.02);
+}
 </style>
