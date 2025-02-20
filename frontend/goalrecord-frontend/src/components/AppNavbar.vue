@@ -5,6 +5,7 @@
       <li><router-link to="/classement">📊 Classement des joueurs</router-link></li>
     </ul>
   </nav>
+  <div class="separator"></div>
 </template>
 
 <script>
@@ -15,7 +16,6 @@ export default {
 
 <style scoped>
 .navbar {
-  background-color: #333;
   padding: 10px;
   text-align: center;
 }
@@ -23,9 +23,9 @@ export default {
 .navbar ul {
   list-style: none;
   padding: 0;
-  margin: 0;
   display: flex;
   justify-content: center;
+  margin: 0 500px;
 }
 
 .navbar li {
@@ -41,4 +41,15 @@ export default {
 .navbar a:hover {
   color: #f0a500;
 }
+
+.separator {
+  width: 50%;
+  height: 4px;
+  background: white;
+  margin-bottom: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 10px;
+}
+
 </style>
