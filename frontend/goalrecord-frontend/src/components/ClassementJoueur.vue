@@ -14,11 +14,11 @@
       <tbody>
       <tr v-for="(joueur, index) in joueurs" :key="index">
         <td>{{ index + 1 }}</td>
-        <td>{{ joueur.nom }}</td>
-        <td>{{ joueur.matchsJoues }}</td>
-        <td>{{ joueur.buts }}</td>
-        <td>{{ joueur.passesDecisives }}</td>
-        <td>{{ joueur.ratioVictoires }}%</td>
+        <td>{{ getInitials(joueur.nom, joueur.prenom) }}</td>
+        <td>{{ joueur.nbMatch }}</td>
+        <td>{{ joueur.nbBut }}</td>
+        <td>{{ joueur.nbVictoire }}</td>
+        <td>{{ getRatioVictoire(joueur.nbVictoire, joueur.nbMatch) }}%</td>
       </tr>
       </tbody>
     </table>
@@ -26,17 +26,31 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "ClassementJoueur",
   data() {
     return {
-      joueurs: [
-        { nom: "Joueur 1", matchsJoues: 10, buts: 8, passesDecisives: 5, ratioVictoires: 75 },
-        { nom: "Joueur 2", matchsJoues: 12, buts: 10, passesDecisives: 7, ratioVictoires: 80 },
-        { nom: "Joueur 3", matchsJoues: 9, buts: 6, passesDecisives: 4, ratioVictoires: 70 },
-        { nom: "Joueur 4", matchsJoues: 15, buts: 12, passesDecisives: 10, ratioVictoires: 85 }
-      ]
+      joueurs: []  // Liste vide qui sera remplie avec les joueurs venant du serveur
     };
+  },
+  mounted() {
+    axios.get('http://localhost:3000/api/classement')
+        .then(response => {
+          this.joueurs = response.data;
+        })
+        .catch(error => {
+          console.error("Erreur lors de la récupération du classement : ", error);
+        });
+  },
+  methods: {
+    getInitials(nom, prenom) {
+      return `${nom.charAt(0).toUpperCase()}. ${prenom}`;
+    },
+    getRatioVictoire(nbVictoire, nbMatch) {
+      return nbMatch === 0 ? 0 : ((nbVictoire / nbMatch) * 100).toFixed(2);
+    }
   }
 };
 </script>

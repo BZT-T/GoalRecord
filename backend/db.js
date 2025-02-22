@@ -71,6 +71,36 @@ class DB {
             throw error;
         }
     }
+
+    async getClassementJoueurs() {
+        try {
+            const result = await this.pool.query(`
+            SELECT
+                j.idjoueur,
+                j.nom,
+                j.prenom,
+                COUNT(CASE WHEN ((mj.equipe = 'A' AND m.scoreequipea > m.scoreequipeb) OR (mj.equipe = 'B' AND m.scoreequipeb > m.scoreequipea)) THEN 1 END) AS nbVictoire,
+                COUNT(bm.idbuteurmatch) AS nbBut,
+                COUNT(mj.idmatchjoueur) AS nbMatchs
+            FROM
+                public.joueur j
+            JOIN
+                public.match_joueur mj ON j.idjoueur = mj.idjoueur
+            JOIN
+                public.match m ON mj.idmatch = m.idmatch
+            LEFT JOIN
+                public.buteurs_match bm ON bm.idjoueurbuteur = j.idjoueur AND bm.idmatch = m.idmatch
+            GROUP BY
+                j.idjoueur, j.nom, j.prenom
+            ORDER BY
+                nbVictoire DESC, nbButs DESC;
+        `);
+            return result.rows;
+        } catch (error) {
+            console.error("Erreur lors de la récupération du classement des joueurs :", error);
+            throw new Error('Erreur lors de la récupération du classement des joueurs');
+        }
+    }
 }
 
 module.exports = new DB();  // Exporte une instance de la classe

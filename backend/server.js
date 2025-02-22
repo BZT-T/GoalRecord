@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const db = require('./db');
+const Joueur = require('./models/Joueur');
 const cors = require('cors');
 
 
@@ -34,6 +35,20 @@ app.get('/api/saison-actuelle', async (req, res) => {
         res.status(500).json({ error: 'Erreur interne du serveur' });
     }
 });
+
+app.get('/api/classement', async (req, res) => {
+    console.log("Demande du classement des joueurs");
+    try {
+        const classement = await Joueur.getClassement();
+        console.log(`<${classement.length}> joueurs trouvés`);
+        console.log(classement);
+        res.json(classement);
+    } catch (error) {
+        console.error('Erreur lors de la récupération du classement des joueurs:', error);
+        res.status(500).json({ error: 'Erreur interne du serveur' });
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
