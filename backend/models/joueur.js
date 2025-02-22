@@ -11,10 +11,66 @@ class Joueur {
         this.nbMatch = nbMatch;
     }
 
+    async getClassementJoueurs() {
+        try {
+            const result = await this.pool.query(`
+            SELECT
+                j.idjoueur,
+                j.nom,
+                j.prenom,
+                COUNT(CASE WHEN ((mj.equipe = 'A' AND m.scoreequipea > m.scoreequipeb) OR (mj.equipe = 'B' AND m.scoreequipeb > m.scoreequipea)) THEN 1 END) AS nbVictoire,
+                COUNT(bm.idbuteurmatch) AS nbBut,
+                COUNT(pm.idbuteurmatch) AS nbPasseD,
+                COUNT(mj.idmatchjoueur) AS nbMatch
+            FROM
+                public.joueur j
+            JOIN
+                public.match_joueur mj ON j.idjoueur = mj.idjoueur
+            JOIN
+                public.match m ON mj.idmatch = m.idmatch
+            LEFT JOIN
+                public.buteurs_match bm ON bm.idjoueurbuteur = j.idjoueur AND bm.idmatch = m.idmatch
+            LEFT JOIN
+                public.buteurs_match pm ON pm.idjoueurpasseur = j.idjoueur AND pm.idmatch = m.idmatch  -- Jointure avec la table des passes décisives
+            GROUP BY
+                j.idjoueur, j.nom, j.prenom
+            ORDER BY
+                nbBut DESC, nbPasseD DESC;
+        `);
+            return result.rows;
+        } catch (error) {
+            console.error("Erreur lors de la récupération du classement des joueurs :", error);
+            throw new Error('Erreur lors de la récupération du classement des joueurs');
+        }
+    }
+
     static async getClassement() {
         try {
-            const data = await db.getClassementJoueurs();
-            console.log(data);
+            const result = await db.pool.query(`
+                SELECT
+                    j.idjoueur,
+                    j.nom,
+                    j.prenom,
+                    COUNT(CASE WHEN ((mj.equipe = 'A' AND m.scoreequipea > m.scoreequipeb) OR (mj.equipe = 'B' AND m.scoreequipeb > m.scoreequipea)) THEN 1 END) AS nbVictoire,
+                    COUNT(bm.idbuteurmatch) AS nbBut,
+                    COUNT(pm.idbuteurmatch) AS nbPasseD,
+                    COUNT(mj.idmatchjoueur) AS nbMatch
+                FROM
+                    public.joueur j
+                JOIN
+                    public.match_joueur mj ON j.idjoueur = mj.idjoueur
+                JOIN
+                    public.match m ON mj.idmatch = m.idmatch
+                LEFT JOIN
+                    public.buteurs_match bm ON bm.idjoueurbuteur = j.idjoueur AND bm.idmatch = m.idmatch
+                LEFT JOIN
+                    public.buteurs_match pm ON pm.idjoueurpasseur = j.idjoueur AND pm.idmatch = m.idmatch  -- Jointure avec la table des passes décisives
+                GROUP BY
+                    j.idjoueur, j.nom, j.prenom
+                ORDER BY
+                    nbBut DESC, nbPasseD DESC;
+            `);
+            const data = result.rows
             return data.map(joueur => {
 
                 const idjoueur = joueur.idjoueur;
