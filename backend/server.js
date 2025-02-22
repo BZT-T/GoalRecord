@@ -41,7 +41,6 @@ app.get('/api/classement', async (req, res) => {
     try {
         const classement = await Joueur.getClassement();
         console.log(`<${classement.length}> joueurs trouvés`);
-        console.log(classement);
         res.json(classement);
     } catch (error) {
         console.error('Erreur lors de la récupération du classement des joueurs:', error);

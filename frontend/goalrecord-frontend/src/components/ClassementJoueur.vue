@@ -17,7 +17,7 @@
         <td>{{ getInitials(joueur.nom, joueur.prenom) }}</td>
         <td>{{ joueur.nbMatch }}</td>
         <td>{{ joueur.nbBut }}</td>
-        <td>{{ joueur.nbVictoire }}</td>
+        <td>{{ joueur.nbPasseD }}</td>
         <td>{{ getRatioVictoire(joueur.nbVictoire, joueur.nbMatch) }}%</td>
       </tr>
       </tbody>

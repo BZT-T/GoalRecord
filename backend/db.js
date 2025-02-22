@@ -81,7 +81,8 @@ class DB {
                 j.prenom,
                 COUNT(CASE WHEN ((mj.equipe = 'A' AND m.scoreequipea > m.scoreequipeb) OR (mj.equipe = 'B' AND m.scoreequipeb > m.scoreequipea)) THEN 1 END) AS nbVictoire,
                 COUNT(bm.idbuteurmatch) AS nbBut,
-                COUNT(mj.idmatchjoueur) AS nbMatchs
+                COUNT(pm.idbuteurmatch) AS nbPasseD,
+                COUNT(mj.idmatchjoueur) AS nbMatch
             FROM
                 public.joueur j
             JOIN
@@ -90,10 +91,12 @@ class DB {
                 public.match m ON mj.idmatch = m.idmatch
             LEFT JOIN
                 public.buteurs_match bm ON bm.idjoueurbuteur = j.idjoueur AND bm.idmatch = m.idmatch
+            LEFT JOIN
+                public.buteurs_match pm ON pm.idjoueurpasseur = j.idjoueur AND pm.idmatch = m.idmatch  -- Jointure avec la table des passes décisives
             GROUP BY
                 j.idjoueur, j.nom, j.prenom
             ORDER BY
-                nbVictoire DESC, nbButs DESC;
+                nbBut DESC, nbPasseD DESC;
         `);
             return result.rows;
         } catch (error) {
