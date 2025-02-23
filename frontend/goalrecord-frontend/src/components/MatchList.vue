@@ -1,19 +1,19 @@
 <template>
   <div class="match-container">
     <div v-for="match in matches" :key="match.idmatch" class="match-card"
-         :class="{'winner': match.scoreequipea > match.scoreequipeb}">
+         :class="{'winner': match.scoreEquipeA > match.scoreEquipeB}">
       <div class="card-body">
 
         <div class="team team-a">
-          <div class="score">{{ match.scoreequipea }}</div>
+          <div class="score">{{ match.scoreEquipeA }}</div>
         </div>
         <div>
-          <div class="match-date">{{ new Date(match.datematch).toLocaleDateString() }}</div>
+          <div class="match-date">{{ new Date(match.dateMatch).toLocaleDateString() }}</div>
           <div class="match-card-body">
 
             <!-- Nom des joueurs équipe A (horizontalement) -->
             <div class="players team-a-players">
-              <p v-for="(player, index) in match.teamAPlayers" :key="index">{{ player }}</p>
+              <p v-for="(player, index) in match.joueursA" :key="index">{{getInitials(player.nom, player.prenom)}}</p>
             </div>
 
             <!-- Séparateur VS -->
@@ -21,13 +21,13 @@
 
             <!-- Nom des joueurs équipe B (horizontalement) -->
             <div class="players team-b-players">
-              <p v-for="(player, index) in match.teamBPlayers" :key="index">{{ player }}</p>
+              <p v-for="(player, index) in match.joueursB" :key="index">{{ getInitials(player.nom, player.prenom) }}</p>
             </div>
 
           </div>
         </div>
         <div class="team team-b">
-          <div class="score">{{ match.scoreequipeb }}</div>
+          <div class="score">{{ match.scoreEquipeB }}</div>
         </div>
       </div>
     </div>
@@ -36,52 +36,26 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
-      matches: [
-        {
-          idmatch: 1,
-          datematch: '12/12/2012',
-          teamAPlayers: ['Joueur A1', 'Joueur A2', 'Joueur A3', 'Joueur A4', 'Joueur A5'],
-          teamBPlayers: ['Joueur B1', 'Joueur B2', 'Joueur B3', 'Joueur B4', 'Joueur B5'],
-          scoreequipea: 3,
-          scoreequipeb: 2
-        },
-        {
-          idmatch: 2,
-          datematch: '12/12/2012',
-          teamAPlayers: ['Joueur A6', 'Joueur A7', 'Joueur A8', 'Joueur A9', 'Joueur A10'],
-          teamBPlayers: ['Joueur B6', 'Joueur B7', 'Joueur B8', 'Joueur B9', 'Joueur B10'],
-          scoreequipea: 1,
-          scoreequipeb: 3
-        },
-        {
-          idmatch: 2,
-          datematch: '12/12/2012',
-          teamAPlayers: ['Joueur A6', 'Joueur A7', 'Joueur A8', 'Joueur A9', 'Joueur A10'],
-          teamBPlayers: ['Joueur B6', 'Joueur B7', 'Joueur B8', 'Joueur B9', 'Joueur B10'],
-          scoreequipea: 1,
-          scoreequipeb: 3
-        },
-        {
-          idmatch: 2,
-          datematch: '12/12/2012',
-          teamAPlayers: ['Joueur A6', 'Joueur A7', 'Joueur A8', 'Joueur A9', 'Joueur A10'],
-          teamBPlayers: ['Joueur B6', 'Joueur B7', 'Joueur B8', 'Joueur B9', 'Joueur B10'],
-          scoreequipea: 1,
-          scoreequipeb: 3
-        },
-        {
-          idmatch: 2,
-          datematch: '12/12/2012',
-          teamAPlayers: ['Joueur A6', 'Joueur A7', 'Joueur A8', 'Joueur A9', 'Joueur A10'],
-          teamBPlayers: ['Joueur B6', 'Joueur B7', 'Joueur B8', 'Joueur B9', 'Joueur B10'],
-          scoreequipea: 1,
-          scoreequipeb: 3
-        }
-      ]
+      matches: []
     };
+  },mounted() {
+    axios.get('http://localhost:3000/api/matchs')
+        .then(response => {
+          this.matches = response.data;
+        })
+        .catch(error => {
+          console.error("Erreur lors de la récupération du classement : ", error);
+        });
+  },
+  methods: {
+    getInitials(nom, prenom) {
+      return `${nom.charAt(0).toUpperCase()}. ${prenom}`;
+    }
   }
 }
 </script>

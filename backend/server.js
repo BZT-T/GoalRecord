@@ -14,10 +14,10 @@ app.get('/', (req, res) => {
     res.send('Backend is running!');
 });
 
-app.get('/api/matches', async (req, res) => {
+app.get('/api/matchs', async (req, res) => {
     console.log("Demande de matchs");
     try {
-        const matches = await Match.getMatches();  // Utiliser la méthode getMatches
+        const matches = await Match.getMatchsParSaison();  // Utiliser la méthode getMatches
         console.log("<"+matches.length+"> matchs trouvés");
         res.json(matches);  // Renvoyer les matchs sous forme de JSON
     } catch (error) {

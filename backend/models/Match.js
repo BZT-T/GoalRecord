@@ -1,6 +1,8 @@
 const db = require('../db');
+const Joueur = require('./Joueur');
 
 class Match {
+
     constructor(idmatch, dateMatch, lieuMatch, scoreEquipeA, scoreEquipeB, idSaison) {
         this.idmatch = idmatch;
         this.dateMatch = dateMatch;
@@ -8,12 +10,14 @@ class Match {
         this.scoreEquipeA = scoreEquipeA;
         this.scoreEquipeB = scoreEquipeB;
         this.idSaison = idSaison;
+        this.joueursA = [];
+        this.joueursB = [];
     }
 
     // Méthode pour récupérer un match par son ID
     static async getMatchById(id) {
         try {
-            const result = await db.query('SELECT * FROM public.match WHERE idmatch = $1', [id]);
+            const result = await db.pool.query('SELECT * FROM public.match WHERE idmatch = $1', [id]);
             if (result.rows.length > 0) {
                 const matchData = result.rows[0];
                 return new Match(
@@ -33,24 +37,60 @@ class Match {
         }
     }
 
-    static async getMatchsParSaison(idSaison) {
+    static async getMatchsParSaison() {
         try {
-            const result = await db.query('SELECT * FROM public.match WHERE idsaison = $1', [idSaison]);
-            return result.rows.map(matchData =>
-                new Match(
-                    matchData.idmatch,
-                    matchData.datematch,
-                    matchData.lieumatch,
-                    matchData.scoreequipea,
-                    matchData.scoreequipeb,
-                    matchData.idsaison
-                )
-            );
+            const result = await db.pool.query(`
+            SELECT 
+                m.idmatch, m.datematch, 
+                m.scoreequipea, m.scoreequipeb, 
+                j.idjoueur, j.nom, j.prenom, mj.equipe
+            FROM public.match m 
+            JOIN match_joueur mj ON m.idmatch = mj.idmatch 
+            JOIN joueur j ON j.idjoueur = mj.idjoueur
+            `);            let matchesMap = new Map(); // Pour regrouper les joueurs par match
+
+            result.rows.forEach(row => {
+                // Vérifie si le match existe déjà dans la map
+                if (!matchesMap.has(row.idmatch)) {
+                    matchesMap.set(row.idmatch, new Match(
+                        row.idmatch,
+                        row.datematch,
+                        row.lieumatch,
+                        row.scoreequipea,
+                        row.scoreequipeb,
+                        row.idsaison
+                    ));
+                }
+
+                let match = matchesMap.get(row.idmatch);
+
+                match.ajouteJoueur(new Joueur(row.idjoueur,row.nom,row.prenom), row.equipe);
+            });
+
+            return Array.from(matchesMap.values());
         } catch (error) {
             console.error('Erreur lors de la récupération des matchs:', error);
             throw new Error('Erreur lors de la récupération des matchs');
         }
     }
+        // static async getMatchsParSaison(idSaison) {
+    //     try {
+    //         const result = await db.query('SELECT * FROM public.match WHERE idsaison = $1', [idSaison]);
+    //         return result.rows.map(matchData =>
+    //             new Match(
+    //                 matchData.idmatch,
+    //                 matchData.datematch,
+    //                 matchData.lieumatch,
+    //                 matchData.scoreequipea,
+    //                 matchData.scoreequipeb,
+    //                 matchData.idsaison
+    //             )
+    //         );
+    //     } catch (error) {
+    //         console.error('Erreur lors de la récupération des matchs:', error);
+    //         throw new Error('Erreur lors de la récupération des matchs');
+    //     }
+    // }
 
     // Méthode pour créer un nouveau match
     static async createMatch(dateMatch, lieuMatch, scoreEquipeA, scoreEquipeB, idSaison) {
@@ -86,6 +126,14 @@ class Match {
             throw new Error('Erreur lors de la suppression du match');
         }
     }
+
+    ajouteJoueur(joueur, equipe){
+        if (equipe === 'A'){
+            this.joueursA.push(joueur);
+        }else {
+            this.joueursB.push(joueur);
+        }
+    };
 }
 
 module.exports = Match;
