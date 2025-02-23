@@ -95,8 +95,3 @@ nav a:hover {
         transform: translateY(-5px);
     }
 }
-
-button:hover {
-    animation: bounce 0.5s ease;
-    background-color: var(--secondary-color);
-}
