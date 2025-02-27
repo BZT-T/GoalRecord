@@ -9,6 +9,7 @@ const cors = require('cors');
 
 
 app.use(cors());  // Permet d'autoriser les requêtes cross-origin
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send('Backend is running!');
@@ -50,6 +51,24 @@ app.get('/api/classement', async (req, res) => {
     }
 });
 
+app.post('/api/Creerjoueur', async (req, res) => {
+    try {
+        const { nom, prenom, age } = req.body;
+
+        if (!nom || !prenom || !age) {
+            return res.status(400).json({ error: "Tous les champs sont obligatoires" });
+        }
+
+        const query = 'INSERT INTO joueur (nom, prenom, age) VALUES ($1, $2, $3) RETURNING *';
+        const values = [nom, prenom, age];
+
+        const result = await db.pool.query(query, values);
+        res.status(201).json(result.rows[0]); // Retourne le joueur créé
+    } catch (error) {
+        console.error("Erreur lors de l'ajout du joueur :", error);
+        res.status(500).json({ error: "Erreur serveur" });
+    }
+});
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
