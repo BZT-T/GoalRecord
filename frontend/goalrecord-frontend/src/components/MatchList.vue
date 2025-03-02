@@ -1,5 +1,5 @@
 <template>
-  <router-link to="/creerJoueur"><button id="AjouterMatch">Ajouter un match</button></router-link>
+  <router-link to="/creerMatch"><button id="AjouterMatch">Ajouter un match</button></router-link>
   <div class="match-container">
     <div v-for="match in matches" :key="match.idmatch" class="match-card"
          :class="{'winner': match.scoreEquipeA > match.scoreEquipeB}">

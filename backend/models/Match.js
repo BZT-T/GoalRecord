@@ -73,57 +73,38 @@ class Match {
             throw new Error('Erreur lors de la récupération des matchs');
         }
     }
-        // static async getMatchsParSaison(idSaison) {
-    //     try {
-    //         const result = await db.query('SELECT * FROM public.match WHERE idsaison = $1', [idSaison]);
-    //         return result.rows.map(matchData =>
-    //             new Match(
-    //                 matchData.idmatch,
-    //                 matchData.datematch,
-    //                 matchData.lieumatch,
-    //                 matchData.scoreequipea,
-    //                 matchData.scoreequipeb,
-    //                 matchData.idsaison
-    //             )
-    //         );
-    //     } catch (error) {
-    //         console.error('Erreur lors de la récupération des matchs:', error);
-    //         throw new Error('Erreur lors de la récupération des matchs');
-    //     }
-    // }
 
-    // Méthode pour créer un nouveau match
-    static async createMatch(dateMatch, lieuMatch, scoreEquipeA, scoreEquipeB, idSaison) {
-        try {
-            const result = await db.query(
-                'INSERT INTO public.match (datematch, lieumatch, scoreequipea, scoreequipeb, idsaison) VALUES ($1, $2, $3, $4, $5) RETURNING idmatch',
-                [dateMatch, lieuMatch, scoreEquipeA, scoreEquipeB, idSaison]
-            );
-            return new Match(
-                result.rows[0].idmatch,
-                dateMatch,
-                lieuMatch,
-                scoreEquipeA,
-                scoreEquipeB,
-                idSaison
-            );
-        } catch (error) {
-            console.error('Erreur lors de la création du match:', error);
-            throw new Error('Erreur lors de la création du match');
-        }
-    }
+    static async creerMatch(dateMatch, lieuMatch, scoreEquipeA, scoreEquipeB, equipeA, equipeB) {
+        const client = await db.pool.connect(); // Connexion à la base pour gérer la transaction
 
-    // Méthode pour supprimer un match
-    static async deleteMatch(idmatch) {
         try {
-            const result = await db.query('DELETE FROM public.match WHERE idmatch = $1 RETURNING *', [idmatch]);
-            if (result.rows.length === 0) {
-                throw new Error('Match non trouvé');
+            await client.query('BEGIN');
+            const queryMatch = `
+            INSERT INTO match (datematch, lieumatch, scoreequipea, scoreequipeb, idsaison)
+            VALUES ($1, $2, $3, $4, 3) RETURNING idmatch`;
+            const valuesMatch = [dateMatch, lieuMatch, scoreEquipeA, scoreEquipeB];
+
+            const resultMatch = await client.query(queryMatch, valuesMatch);
+            const idMatch = resultMatch.rows[0].idmatch;
+
+            // Insérer les joueurs des équipes A et B
+            const queryJoueur = `INSERT INTO match_joueur (idmatch, idjoueur, equipe) VALUES ($1, $2, $3)`;
+
+            for (const joueur of equipeA) {
+                await client.query(queryJoueur, [idMatch, joueur.idjoueur, 'A']);
             }
-            return `Match ${idmatch} supprimé avec succès`;
+            for (const joueur of equipeB) {
+                await client.query(queryJoueur, [idMatch, joueur.idjoueur, 'B']);
+            }
+
+            await client.query('COMMIT');
+            return idMatch;
         } catch (error) {
-            console.error('Erreur lors de la suppression du match:', error);
-            throw new Error('Erreur lors de la suppression du match');
+            await client.query('ROLLBACK'); // Annuler la transaction en cas d'erreur
+            console.error("Erreur lors de l'enregistrement du match :", error);
+            return 0;
+        } finally {
+            client.release(); // Libérer la connexion
         }
     }
 
@@ -133,7 +114,24 @@ class Match {
         }else {
             this.joueursB.push(joueur);
         }
-    };
+    }
+
+    static async ajouteButeur(idMatch, buts) {
+        try {
+
+            for (const but of buts) {
+                await db.pool.query(
+                    "INSERT INTO buteurs_match (idmatch, idjoueurbuteur, idjoueurpasseur, minutedubut) VALUES ($1, $2, $3, $4)",
+                    [idMatch, but.buteur, but.passeur || null, but.minute]
+                );
+            }
+
+            return true;
+        } catch (error) {
+            console.error("Erreur lors de l'ajout des buts :", error);
+            return false;
+        }
+    }
 }
 
 module.exports = Match;

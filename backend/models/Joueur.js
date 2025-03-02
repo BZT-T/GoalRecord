@@ -89,6 +89,32 @@ class Joueur {
             throw new Error('Impossible de récupérer le classement');
         }
     }
+
+    static async chercheJoueurs(sRecherche) {
+        try {
+            const result = await db.pool.query(`
+              SELECT * FROM joueur 
+              WHERE LOWER(nom) LIKE LOWER($1) 
+              OR LOWER(prenom) LIKE LOWER($1) 
+              LIMIT 10
+            `, [`%${sRecherche}%`]);
+            return result.rows;
+        } catch (error) {
+            console.error("Erreur lors de la récupération du classement des joueurs :", error);
+            throw new Error('Erreur lors de la récupération du classement des joueurs');
+        }
+    }
+    static async creerJoueur(nom, prenom, age) {
+        try {
+            const result = await db.pool.query(`
+              INSERT INTO joueur (nom, prenom, age) VALUES ($1, $2, $3) RETURNING *
+            `, [nom, prenom, age]);
+            return result.rows;
+        } catch (error) {
+            console.error("Erreur lors de la récupération du classement des joueurs :", error);
+            throw new Error('Erreur lors de la récupération du classement des joueurs');
+        }
+    }
 }
 
 module.exports = Joueur;

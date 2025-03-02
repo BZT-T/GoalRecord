@@ -3,12 +3,14 @@ import MatchList from "./components/MatchList.vue";
 import ClassementJoueur from "./components/ClassementJoueur.vue";
 import MatchDetails from "./components/MatchDetails.vue";
 import CreerJoueur from "./components/CreerJoueur.vue";
+import CreerMatch from "./components/CreerMatch.vue";
 
 const routes = [
     { path: "/", component: MatchList },
     { path: "/classement", component: ClassementJoueur },
     { path: "/matchdetails", component: MatchDetails },
     { path: "/creerJoueur", component: CreerJoueur },
+    { path: "/creerMatch", component: CreerMatch },
 ];
 
 const router = createRouter({

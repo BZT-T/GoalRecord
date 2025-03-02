@@ -59,16 +59,55 @@ app.post('/api/Creerjoueur', async (req, res) => {
             return res.status(400).json({ error: "Tous les champs sont obligatoires" });
         }
 
-        const query = 'INSERT INTO joueur (nom, prenom, age) VALUES ($1, $2, $3) RETURNING *';
-        const values = [nom, prenom, age];
-
-        const result = await db.pool.query(query, values);
-        res.status(201).json(result.rows[0]); // Retourne le joueur créé
+        const result = await Joueur.creerJoueur(nom, prenom, age);
+        res.status(201).json(result[0]); // Retourne le joueur créé
     } catch (error) {
         console.error("Erreur lors de l'ajout du joueur :", error);
         res.status(500).json({ error: "Erreur serveur" });
     }
 });
+
+app.get("/api/recherche-joueurs", async (req, res) => {
+    try {
+        const { query } = req.query;
+
+        if (!query) {
+            return res.status(400).json({ error: "Requête vide" });
+        }
+
+        const result = await Joueur.chercheJoueurs(query);
+
+        res.json(result);
+    } catch (error) {
+        console.error("Erreur lors de la recherche des joueurs :", error);
+        res.status(500).json({ error: "Erreur serveur" });
+    }
+});
+
+app.post('/api/creer-match', async (req, res) => {
+    const { dateMatch, lieuMatch, scoreEquipeA, scoreEquipeB, equipeA, equipeB } = req.body;
+
+    const idMatch = await Match.creerMatch(dateMatch, lieuMatch, scoreEquipeA, scoreEquipeB, equipeA, equipeB);
+
+    if (idMatch > 0) {
+        res.status(201).json({ message: "Match et joueurs enregistrés avec succès", idmatch: idMatch });
+    }else {
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+});
+
+app.post("/api/ajouter-buts", async (req, res) => {
+    const { idMatch, buts } = req.body;
+
+    const resultat = Match.ajouteButeur(idMatch, buts)
+
+    if (resultat) {
+        res.status(201).json({ message: "Buts ajoutés avec succès !" });
+    }else {
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
