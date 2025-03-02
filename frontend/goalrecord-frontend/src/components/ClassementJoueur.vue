@@ -39,6 +39,7 @@ export default {
     axios.get('http://localhost:3000/api/classement')
         .then(response => {
           this.joueurs = response.data;
+          console.log(this.joueurs);
         })
         .catch(error => {
           console.error("Erreur lors de la récupération du classement : ", error);

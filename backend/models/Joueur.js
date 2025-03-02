@@ -51,22 +51,25 @@ class Joueur {
                     j.idjoueur,
                     j.nom,
                     j.prenom,
-                    COUNT(CASE WHEN ((mj.equipe = 'A' AND m.scoreequipea > m.scoreequipeb) OR (mj.equipe = 'B' AND m.scoreequipeb > m.scoreequipea)) THEN 1 END) AS nbVictoire,
-                    COUNT(bm.idbuteurmatch) AS nbBut,
-                    COUNT(pm.idbuteurmatch) AS nbPasseD,
-                    COUNT(mj.idmatchjoueur) AS nbMatch
+                    (select COUNT(CASE WHEN ((mj.equipe = 'A' AND m.scoreequipea > m.scoreequipeb) 
+                                    OR (mj.equipe = 'B' AND m.scoreequipeb > m.scoreequipea)) THEN 1 END)
+                                    from match_joueur mj
+                                    join match m on m.idmatch = mj.idmatch
+                                    where mj.idjoueur = j.idjoueur
+                                    ) AS nbVictoire,
+                    (select COUNT(bm.idjoueurbuteur)
+                    from public.buteurs_match bm 
+                    where bm.idjoueurbuteur = j.idjoueur) AS nbBut,
+                    (select COUNT(pm.idjoueurpasseur)
+                    from public.buteurs_match pm 
+                    where pm.idjoueurpasseur = j.idjoueur) AS nbPasseD,
+                    (select COUNT(mj.idmatchjoueur)
+                    from public.match_joueur mj 
+                    where mj.idjoueur = j.idjoueur) AS nbMatch
                 FROM
-                    public.joueur j
-                JOIN
-                    public.match_joueur mj ON j.idjoueur = mj.idjoueur
-                JOIN
-                    public.match m ON mj.idmatch = m.idmatch
-                LEFT JOIN
-                    public.buteurs_match bm ON bm.idjoueurbuteur = j.idjoueur AND bm.idmatch = m.idmatch
-                LEFT JOIN
-                    public.buteurs_match pm ON pm.idjoueurpasseur = j.idjoueur AND pm.idmatch = m.idmatch  -- Jointure avec la table des passes décisives
+                public.joueur j
                 GROUP BY
-                    j.idjoueur, j.nom, j.prenom
+                j.idjoueur, j.nom, j.prenom
                 ORDER BY
                     nbBut DESC, nbPasseD DESC;
             `);
