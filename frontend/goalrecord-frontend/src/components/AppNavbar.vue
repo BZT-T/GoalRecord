@@ -3,6 +3,9 @@
     <ul>
       <li><router-link to="/">🏆 Liste des matchs</router-link></li>
       <li><router-link to="/classement">📊 Classement des joueurs</router-link></li>
+      <router-link to="/creerMatch">Ajouter un match</router-link>
+      <router-link to="/creerJoueur">Créer un joueur</router-link>
+
     </ul>
   </nav>
   <div class="separator"></div>

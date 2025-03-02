@@ -62,31 +62,6 @@ export default {
 </script>
 
 <style scoped>
-#AjouterMatch {
-  margin-left: 50px;
-  margin-bottom: 10px;
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  background: linear-gradient(45deg, #28a745, #2ecc71);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 4px 6px rgba(40, 167, 69, 0.3);
-}
-
-#AjouterMatch:hover {
-  background: linear-gradient(45deg, #218838, #27ae60);
-  transform: scale(1.05);
-  box-shadow: 0 6px 10px rgba(40, 167, 69, 0.5);
-}
-
-#AjouterMatch:active {
-  transform: scale(0.98);
-  box-shadow: 0 2px 4px rgba(40, 167, 69, 0.2);
-}
 
 .match-container {
   display: flex;
