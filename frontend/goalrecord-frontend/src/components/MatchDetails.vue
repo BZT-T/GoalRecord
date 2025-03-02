@@ -5,43 +5,39 @@
     </div>
     <div class="terrain">
       <div class="zone zone-gauche">
-
         <div class="zone-gauche-haut">
           <div class="joueur">
             <div class="point"></div>
-            <div class="nomjoueur">yassine</div>
+            <div class="nomjoueur">{{ getInitials(joueursA[0]?.nom, joueursA[0]?.prenom) }}</div> <!-- A1 -->
           </div>
           <div class="joueur">
             <div class="point"></div>
-            <div class="nomjoueur">elies</div>
+            <div class="nomjoueur">{{ getInitials(joueursA[1]?.nom, joueursA[1]?.prenom) }}</div> <!-- A2 -->
           </div>
         </div>
 
         <div class="zone-gauche-bas">
           <div class="joueur">
-            <div class="nomjoueur">simeon</div>
+            <div class="nomjoueur">{{ getInitials(joueursB[0]?.nom, joueursB[0]?.prenom) }}</div> <!-- B1 -->
             <div class="point"></div>
           </div>
           <div class="joueur">
-            <div class="nomjoueur">ibrahim</div>
+            <div class="nomjoueur">{{ getInitials(joueursB[1]?.nom, joueursB[1]?.prenom) }}</div> <!-- B2 -->
             <div class="point"></div>
           </div>
         </div>
-
       </div>
 
-      <!-- Zone du milieu placée entre les deux autres zones -->
       <div class="milieu">
         <div class="surface-haut">
           <div class="joueur">
             <div class="point"></div>
-            <div class="nomjoueur">issam</div>
+            <div class="nomjoueur">{{ getInitials(joueursA[2]?.nom, joueursA[2]?.prenom) }}</div> <!-- A3 -->
           </div>
-
         </div>
         <div class="surface-bas">
           <div class="joueur">
-            <div class="nomjoueur">ahmed</div>
+            <div class="nomjoueur">{{ getInitials(joueursB[2]?.nom, joueursB[2]?.prenom) }}</div> <!-- B3 -->
             <div class="point"></div>
           </div>
         </div>
@@ -51,21 +47,21 @@
         <div class="zone-droite-haut">
           <div class="joueur">
             <div class="point"></div>
-            <div class="nomjoueur">cafwan</div>
+            <div class="nomjoueur">{{ getInitials(joueursA[3]?.nom, joueursA[3]?.prenom) }}</div> <!-- A4 -->
           </div>
           <div class="joueur">
             <div class="point"></div>
-            <div class="nomjoueur">mohamed</div>
+            <div class="nomjoueur">{{ getInitials(joueursA[4]?.nom, joueursA[4]?.prenom) }}</div> <!-- A5 -->
           </div>
         </div>
 
         <div class="zone-droite-bas">
           <div class="joueur">
-            <div class="nomjoueur">redouane</div>
+            <div class="nomjoueur">{{ getInitials(joueursB[3]?.nom, joueursB[3]?.prenom) }}</div> <!-- B4 -->
             <div class="point"></div>
           </div>
           <div class="joueur">
-            <div class="nomjoueur">younes</div>
+            <div class="nomjoueur">{{ getInitials(joueursB[4]?.nom, joueursB[4]?.prenom) }}</div> <!-- B5 -->
             <div class="point"></div>
           </div>
         </div>
@@ -87,40 +83,36 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      matchId: this.$route.params.id, // Récupérer l'ID du match depuis l'URL
       dateMatch: '',
       lieuMatch: '',
-      equipeA: [],
-      equipeB: [],
-      joueurs: []
+      joueursA: [],
+      joueursB: []
     };
   },
   mounted() {
-    this.recupererJoueurs();
+    this.recupererMatchDetails();
   },
   methods: {
-    async recupererJoueurs() {
+    async recupererMatchDetails() {
       try {
-        const response = await axios.get('http://localhost:3000/api/joueurs');
-        this.joueurs = response.data;
+        const response = await axios.get(`http://localhost:3000/api/match/${this.matchId}`);
+        const matchData = response.data;
+
+        this.dateMatch = matchData.dateMatch;
+        this.lieuMatch = matchData.lieuMatch;
+        this.joueursA = matchData.joueursA;
+        this.joueursB = matchData.joueursB;
+
       } catch (error) {
-        console.error("Erreur lors de la récupération des joueurs", error);
+        console.error("Erreur lors de la récupération des détails du match", error);
       }
     },
-    async creerMatch() {
-      try {
-        await axios.post('http://localhost:3000/api/matchs', {
-          dateMatch: this.dateMatch,
-          lieuMatch: this.lieuMatch,
-          equipeA: this.equipeA,
-          equipeB: this.equipeB
-        });
-        alert('Match créé avec succès !');
-        this.dateMatch = '';
-        this.lieuMatch = '';
-        this.equipeA = [];
-        this.equipeB = [];
-      } catch (error) {
-        console.error("Erreur lors de la création du match", error);
+    getInitials(nom, prenom) {
+      if (prenom && nom) {
+        return `${nom.charAt(0).toUpperCase()}. ${prenom}`;
+      } else {
+        return '';
       }
     }
   }

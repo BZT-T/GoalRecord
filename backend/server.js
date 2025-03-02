@@ -108,6 +108,21 @@ app.post("/api/ajouter-buts", async (req, res) => {
     }
 });
 
+app.get('/api/match/:id', async (req, res) => {
+    const matchId = req.params.id;
+    console.log("Demande de récupération du match avec l'ID : " + matchId);
+
+    try {
+        const match = await Match.getMatchById(matchId);
+        if (!match) {
+            return res.status(404).json({ message: 'Match non trouvé' });
+        }
+        res.json(match); // Retourner le match trouvé en réponse
+    } catch (error) {
+        console.error('Erreur lors de la récupération du match:', error);
+        res.status(500).json({ error: 'Erreur interne du serveur' });
+    }
+});
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);

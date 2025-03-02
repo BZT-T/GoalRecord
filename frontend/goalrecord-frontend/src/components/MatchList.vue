@@ -1,40 +1,40 @@
 <template>
-  <router-link to="/creerMatch"><button id="AjouterMatch">Ajouter un match</button></router-link>
   <div class="match-container">
     <div v-for="match in matches" :key="match.idmatch" class="match-card"
          :class="{'winner': match.scoreEquipeA > match.scoreEquipeB}">
-      <div class="card-body">
+      <router-link :to="{ name: 'matchDetails', params: { id: match.idmatch } }" class="match-card-link">
+        <div class="card-body">
+          <div class="team team-a">
+            <div class="score">{{ match.scoreEquipeA }}</div>
+          </div>
+          <div>
+            <div class="match-date">{{ new Date(match.dateMatch).toLocaleDateString() }}</div>
+            <div class="match-card-body">
 
-        <div class="team team-a">
-          <div class="score">{{ match.scoreEquipeA }}</div>
-        </div>
-        <div>
-          <div class="match-date">{{ new Date(match.dateMatch).toLocaleDateString() }}</div>
-          <div class="match-card-body">
+              <!-- Nom des joueurs équipe A (horizontalement) -->
+              <div class="players team-a-players">
+                <p v-for="(player, index) in match.joueursA" :key="index">{{getInitials(player.nom, player.prenom)}}</p>
+              </div>
 
-            <!-- Nom des joueurs équipe A (horizontalement) -->
-            <div class="players team-a-players">
-              <p v-for="(player, index) in match.joueursA" :key="index">{{getInitials(player.nom, player.prenom)}}</p>
+              <!-- Séparateur VS -->
+              <div class="vs-separator">VS</div>
+
+              <!-- Nom des joueurs équipe B (horizontalement) -->
+              <div class="players team-b-players">
+                <p v-for="(player, index) in match.joueursB" :key="index">{{ getInitials(player.nom, player.prenom) }}</p>
+              </div>
+
             </div>
-
-            <!-- Séparateur VS -->
-            <div class="vs-separator">VS</div>
-
-            <!-- Nom des joueurs équipe B (horizontalement) -->
-            <div class="players team-b-players">
-              <p v-for="(player, index) in match.joueursB" :key="index">{{ getInitials(player.nom, player.prenom) }}</p>
-            </div>
-
+          </div>
+          <div class="team team-b">
+            <div class="score">{{ match.scoreEquipeB }}</div>
           </div>
         </div>
-        <div class="team team-b">
-          <div class="score">{{ match.scoreEquipeB }}</div>
-        </div>
-      </div>
+      </router-link>
     </div>
-
   </div>
 </template>
+
 
 <script>
 import axios from "axios";
@@ -176,4 +176,11 @@ export default {
 .match-card:hover {
   transform: scale(1.02);
 }
+
+.match-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+
 </style>

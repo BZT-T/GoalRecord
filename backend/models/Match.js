@@ -17,10 +17,23 @@ class Match {
     // Méthode pour récupérer un match par son ID
     static async getMatchById(id) {
         try {
-            const result = await db.pool.query('SELECT * FROM public.match WHERE idmatch = $1', [id]);
+            const query = `
+            SELECT m.idmatch, m.datematch, m.lieumatch, m.scoreequipea, m.scoreequipeb, m.idsaison,
+                   j.idjoueur, j.nom, j.prenom, mj.equipe
+            FROM public.match AS m
+            JOIN public.match_joueur AS mj ON mj.idmatch = m.idmatch
+            JOIN public.joueur AS j ON j.idjoueur = mj.idjoueur
+            WHERE m.idmatch = $1
+        `;
+
+            // Exécution de la requête SQL avec le paramètre d'ID
+            const result = await db.pool.query(query, [id]);
+
             if (result.rows.length > 0) {
                 const matchData = result.rows[0];
-                return new Match(
+
+                // Créer un objet pour le match avec les informations récupérées
+                const match = new Match(
                     matchData.idmatch,
                     matchData.datematch,
                     matchData.lieumatch,
@@ -28,6 +41,24 @@ class Match {
                     matchData.scoreequipeb,
                     matchData.idsaison
                 );
+
+                // Parcourir les résultats pour ajouter les joueurs à l'équipe correspondante
+                result.rows.forEach(row => {
+                    const joueur = {
+                        idjoueur: row.idjoueur,
+                        nom: row.nom,
+                        prenom: row.prenom
+                    };
+
+                    // Ajouter le joueur à l'équipe A ou B selon la valeur de 'equipe'
+                    if (row.equipe === 'A') {
+                        match.joueursA.push(joueur);
+                    } else if (row.equipe === 'B') {
+                        match.joueursB.push(joueur);
+                    }
+                });
+
+                return match;
             } else {
                 throw new Error('Match non trouvé');
             }
@@ -36,6 +67,7 @@ class Match {
             throw new Error('Erreur lors de la récupération du match');
         }
     }
+
 
     static async getMatchsParSaison() {
         try {
