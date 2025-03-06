@@ -8,7 +8,7 @@
         <th>Matchs joués</th>
         <th>Buts</th>
         <th>Passes décisives</th>
-        <th>Ratio Victoires</th>
+        <th>GA/A</th>
       </tr>
       </thead>
       <tbody>
@@ -18,7 +18,7 @@
         <td>{{ joueur.nbMatch }}</td>
         <td>{{ joueur.nbBut }}</td>
         <td>{{ joueur.nbPasseD }}</td>
-        <td>{{ getRatioVictoire(joueur.nbVictoire, joueur.nbMatch) }}%</td>
+        <td>{{ getGoalAssistAverage(joueur.nbBut, joueur.nbPasseD, joueur.nbMatch) }}</td>
       </tr>
       </tbody>
     </table>
@@ -49,9 +49,10 @@ export default {
     getInitials(nom, prenom) {
       return `${nom.charAt(0).toUpperCase()}. ${prenom}`;
     },
-    getRatioVictoire(nbVictoire, nbMatch) {
-      return nbMatch === 0 ? 0 : ((nbVictoire / nbMatch) * 100).toFixed(2);
+    getGoalAssistAverage(nbBut, nbPasse, nbMatch) {
+      return nbMatch === 0 ? 0 : ((+nbBut + +nbPasse) / nbMatch).toFixed(2);
     }
+
   }
 };
 </script>
