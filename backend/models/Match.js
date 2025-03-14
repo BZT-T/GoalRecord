@@ -12,6 +12,7 @@ class Match {
         this.idSaison = idSaison;
         this.joueursA = [];
         this.joueursB = [];
+        this.actions = [];
     }
 
     // Méthode pour récupérer un match par son ID
@@ -55,6 +56,47 @@ class Match {
                         match.joueursA.push(joueur);
                     } else if (row.equipe === 'B') {
                         match.joueursB.push(joueur);
+                    }
+                });
+
+                // 2ème requête : Récupérer les buteurs du match
+                const queryButeurs = `
+                    SELECT bm.idjoueurbuteur, j.nom as nom_buteur, j.prenom as prenom_buteur, bm.minutedubut, p.nom as nom_passeur, p.prenom as prenom_passeur
+                    FROM public.buteurs_match AS bm
+                    JOIN public.joueur AS j ON j.idjoueur = bm.idjoueurbuteur
+                    LEFT OUTER JOIN public.joueur AS p ON p.idjoueur = bm.idjoueurpasseur
+                    WHERE bm.idmatch = $1
+                    ORDER BY minutedubut;
+                `;
+
+                const resultButeurs = await db.pool.query(queryButeurs, [id]);
+
+                // Ajouter les buteurs au match
+                // Ajouter les buteurs au match
+                match.actions = resultButeurs.rows.map(row => ({
+                    minute: row.minutedubut,
+                    buteur: {
+                        idjoueur: row.idjoueurbuteur,
+                        nom: row.nom_buteur,
+                        prenom: row.prenom_buteur
+                    },
+                    passeur: row.nom_passeur ? {
+                        nom: row.nom_passeur,
+                        prenom: row.prenom_passeur
+                    } : null // Si pas de passeur, mettre null
+                }));
+
+
+                // Déterminer l'équipe du buteur pour chaque action
+                match.actions.forEach(action => {
+                    const buteurId = action.buteur.idjoueur;
+
+                    if (match.joueursA.some(joueur => joueur.idjoueur === buteurId)) {
+                        action.equipe = 'A';
+                    } else if (match.joueursB.some(joueur => joueur.idjoueur === buteurId)) {
+                        action.equipe = 'B';
+                    } else {
+                        action.equipe = 'Inconnue'; // Sécurité en cas d'erreur
                     }
                 });
 

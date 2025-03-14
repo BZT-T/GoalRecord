@@ -1,8 +1,32 @@
 <template>
   <div class="container">
     <div class="information">
-      <!-- Informations supplémentaires sur le match -->
+      <div class="score-container">
+        <span class="team-name">Équipe A</span>
+        <h2 class="score">{{ scoreEquipeA }} - {{ scoreEquipeB }}</h2>
+        <span class="team-name">Équipe B</span>
+      </div>
+      <p class="match-info">{{ formatDate(dateMatch) }} - {{ lieuMatch }}</p>
+
+      <div class="actions-container">
+        <div
+            v-for="action in actions"
+            :key="action.minute"
+            class="action"
+            :class="{'align-left': action.equipe === 'A', 'align-right': action.equipe === 'B'}"
+        >
+          <span class="minute">{{ action.minute }}'</span>
+          <span class="buteur">
+          {{ getInitials(action.buteur.nom, action.buteur.prenom) }}
+      </span>
+          <span v-if="action.passeur" class="passeur">
+        (Assist: {{ getInitials(action.passeur.nom, action.passeur.prenom) }})
+      </span>
+        </div>
+      </div>
     </div>
+
+
     <div class="terrain">
       <div class="zone zone-gauche">
         <div class="zone-gauche-haut">
@@ -83,11 +107,14 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      matchId: this.$route.params.id, // Récupérer l'ID du match depuis l'URL
+      matchId: this.$route.params.id,
       dateMatch: '',
       lieuMatch: '',
       joueursA: [],
-      joueursB: []
+      joueursB: [],
+      scoreEquipeA: 0,
+      scoreEquipeB: 0,
+      actions: []
     };
   },
   mounted() {
@@ -98,11 +125,13 @@ export default {
       try {
         const response = await axios.get(`http://localhost:3000/api/match/${this.matchId}`);
         const matchData = response.data;
-
         this.dateMatch = matchData.dateMatch;
         this.lieuMatch = matchData.lieuMatch;
         this.joueursA = matchData.joueursA;
         this.joueursB = matchData.joueursB;
+        this.scoreEquipeA = matchData.scoreEquipeA;
+        this.scoreEquipeB = matchData.scoreEquipeB;
+        this.actions = matchData.actions;
 
       } catch (error) {
         console.error("Erreur lors de la récupération des détails du match", error);
@@ -114,6 +143,11 @@ export default {
       } else {
         return '';
       }
+    },
+    formatDate(date) {
+      if (!date) return "";
+      const options = { day: "2-digit", month: "long", year: "numeric" };
+      return new Date(date).toLocaleDateString("fr-FR", options);
     }
   }
 };
@@ -124,15 +158,6 @@ export default {
   padding-bottom: 15px;
   display: flex;
   justify-content: space-evenly;
-}
-
-.information {
-  position: relative;
-  width: 600px;
-  height: 600px;
-  background-color: #ffffff;
-  border: 2px solid #fff;
-  border-radius: 10px;
 }
 
 .terrain {
@@ -282,4 +307,92 @@ export default {
   letter-spacing: 1px;
 }
 
+.information {
+   position: relative;
+   width: 600px;
+   height: 600px;
+   background-color: #ffffff;
+   border: 2px solid #fff;
+   border-radius: 10px;
+   overflow-y: auto;
+ }
+
+/* Score amélioré */
+.score-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.team-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.score {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 0 20px;
+}
+
+/* Date et lieu */
+.match-info {
+  text-align: center;
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+/* Actions */
+.actions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 8px;
+  max-width: 60%;
+}
+
+/* Alignement dynamique */
+.align-left {
+  align-self: flex-start;
+  background-color: rgba(0, 0, 255, 0.1);
+  padding: 10px;
+  border-left: 5px solid blue;
+}
+
+.align-right {
+  align-self: flex-end;
+  background-color: rgba(255, 0, 0, 0.1);
+  padding: 10px;
+  border-right: 5px solid red;
+}
+
+/* Style des textes */
+.minute {
+  font-weight: bold;
+  color: #555;
+}
+
+.buteur {
+  font-weight: bold;
+}
+
+.passeur {
+  color: gray;
+  font-style: italic;
+}
 </style>
+
