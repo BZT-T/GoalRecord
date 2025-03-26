@@ -1,13 +1,14 @@
 <template>
   <div class="container">
     <div class="information">
-      <div class="score-container">
-        <span class="team-name">Équipe A</span>
-        <h2 class="score">{{ scoreEquipeA }} - {{ scoreEquipeB }}</h2>
-        <span class="team-name">Équipe B</span>
-      </div>
-      <p class="match-info">{{ formatDate(dateMatch) }} - {{ lieuMatch }}</p>
-
+      <div class="information-header">
+        <div class="score-container">
+          <span class="team-name">Équipe A</span>
+          <h2 class="score">{{ scoreEquipeA }} - {{ scoreEquipeB }}</h2>
+          <span class="team-name">Équipe B</span>
+        </div>
+        <p class="match-info">{{ formatDate(dateMatch) }} - {{ lieuMatch }}</p>
+        </div>
       <div class="actions-container">
         <div
             v-for="action in actions"
@@ -292,10 +293,10 @@ export default {
 .point {
   width: 50px;
   height: 50px;
-  background-color: #59b53f; /* Couleur bleue pour l'avatar */
+  background-color: #59b53f;
   border-radius: 50%;
   margin-bottom: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Ombre autour du point */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .nomjoueur {
@@ -308,91 +309,127 @@ export default {
 }
 
 .information {
-   position: relative;
-   width: 600px;
-   height: 600px;
-   background-color: #ffffff;
-   border: 2px solid #fff;
-   border-radius: 10px;
-   overflow-y: auto;
- }
+  position: relative;
+  width: 580px;
+  height: 570px;
+  /*background: linear-gradient(20deg, rgba(105,170,131,1) 0%, rgb(0, 100, 0) 52%, rgba(114,184,142,1) 100%);*/
+  background: url("C:/Users/raniw/Downloads/image-mesh-gradient.png");
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombre douce */
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  border: 2px solid white;
+}
 
-/* Score amélioré */
+
+/* Header de l'information */
+.information-header {
+  position: sticky;
+  top: 0;
+  background-color: rgb(0, 0, 0, 0.4);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  z-index: 1;
+}
+
+/* Conteneur du score */
 .score-container {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  font-size: 32px;
-  font-weight: bold;
-  text-align: center;
+  align-items: center;
   margin-bottom: 20px;
 }
 
 .team-name {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
-  color: #333;
+  color: #ffffff;
+  text-transform: uppercase;
 }
 
 .score {
   font-size: 48px;
   font-weight: bold;
-  margin: 0 20px;
+  margin: 0 15px;
+  color: #ffffff; /* Couleur du score */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Ombre pour le score */
 }
 
-/* Date et lieu */
 .match-info {
   text-align: center;
-  font-size: 16px;
-  color: #777;
-  margin-bottom: 20px;
+  font-size: 14px;
+  color: #ffffff;
+  margin-top: 5px;
+  font-weight: bold;
 }
 
-/* Actions */
 .actions-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  max-height: calc(100% - 150px);
+  overflow-y: scroll;
 }
 
+.actions-container::-webkit-scrollbar {
+  width: 0px; /* Cacher l'ascenseur */
+}
+
+.actions-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.actions-container::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* Action individuelle */
 .action {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 18px;
-  padding: 5px;
-  border-radius: 8px;
-  max-width: 60%;
+  gap: 8px;
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.3s ease;
 }
 
-/* Alignement dynamique */
+.action:hover {
+  background-color: rgba(194, 244, 180, 0.4);
+}
+
 .align-left {
   align-self: flex-start;
-  background-color: rgba(0, 0, 255, 0.1);
-  padding: 10px;
-  border-left: 5px solid blue;
+  background-color: #ffffff;
+  padding-left: 15px;
+  border-left: 5px solid #c2f4b4;
 }
 
 .align-right {
   align-self: flex-end;
-  background-color: rgba(255, 0, 0, 0.1);
-  padding: 10px;
-  border-right: 5px solid red;
+  background-color: rgb(255, 255, 255);
+  padding-right: 15px;
+  border-right: 5px solid #006400;
 }
 
-/* Style des textes */
 .minute {
   font-weight: bold;
-  color: #555;
+  color: #000000;
 }
 
 .buteur {
   font-weight: bold;
+  color: #000000;
 }
 
 .passeur {
-  color: gray;
   font-style: italic;
+  color: #777;
 }
+
 </style>
 
