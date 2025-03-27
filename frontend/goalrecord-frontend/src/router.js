@@ -6,11 +6,11 @@ import CreerJoueur from "./components/CreerJoueur.vue";
 import CreerMatch from "./components/CreerMatch.vue";
 
 const routes = [
-    { path: "/", component: MatchList },
-    { path: "/classement", component: ClassementJoueur },
-    { path: "/matchDetails/:id", name: "matchDetails", component: MatchDetails },
-    { path: "/creerJoueur", component: CreerJoueur },
-    { path: "/creerMatch", component: CreerMatch },
+    { path: "/", component: MatchList, meta: { hideHeader: false,} },
+    { path: "/classement", component: ClassementJoueur, meta: { hideHeader: true,} },
+    { path: "/matchDetails/:id", name: "matchDetails", component: MatchDetails, meta: { hideHeader: true,} },
+    { path: "/creerJoueur", component: CreerJoueur, meta: { hideHeader: false,} },
+    { path: "/creerMatch", component: CreerMatch, meta: { hideHeader: false,} },
 ];
 
 const router = createRouter({
