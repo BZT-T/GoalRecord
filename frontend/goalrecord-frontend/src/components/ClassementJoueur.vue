@@ -82,7 +82,43 @@ export default {
 .table-container {
   max-height: 550px;
   overflow-y: auto;
+  width: 80%;
+  background: rgba(0, 0, 0, 0.3); /* légère transparence pour l'effet visuel */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+table {
   width: 100%;
+  border-collapse: collapse;
+  color: white;
+  padding: 10px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+th {
+  border-bottom: 2px solid #ffffff;
+  font-size: 1.7rem;
+  position: sticky;
+  top: 0;
+  background-color: #006400;
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+td {
+  border-bottom: 1px solid white;
+  font-size: 1.5rem;
+  background-color: rgba(213, 246, 213, 0.47);
+}
+
+tr:hover {
+  background-color: rgba(0, 100, 0, 0.2); /* léger survol des lignes */
 }
 
 .table-container::-webkit-scrollbar {
@@ -100,33 +136,6 @@ export default {
 
 .table-container::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.8);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  color: white;
-  padding: 10px;
-}
-
-th, td {
-  padding: 10px;
-  text-align: center;
-  vertical-align: middle;
-}
-
-th {
-  border-bottom: 2px solid white;
-  font-size: 1.7rem;
-  position: sticky;
-  top: 0;
-  background-color: #006400;
-  z-index: 1;
-}
-
-td {
-  border-bottom: 1px solid white;
-  font-size: 1.5rem;
 }
 
 .button-53 {
