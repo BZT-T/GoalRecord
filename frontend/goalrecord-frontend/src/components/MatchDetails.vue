@@ -12,6 +12,7 @@
           <p class="match-info">{{ formatDate(dateMatch) }} - {{ lieuMatch }}</p>
         </div>
         <div class="actions-container">
+          <div class="separator"><span></span>Coup d'envoi<span></span></div>
           <div
               v-for="action in actions"
               :key="action.minute"
@@ -26,6 +27,7 @@
         (Assist: {{ getInitials(action.passeur.nom, action.passeur.prenom) }})
       </span>
           </div>
+          <div class="separator"><span></span>Fin du match<span></span></div>
         </div>
       </div>
 
@@ -62,6 +64,8 @@
               <div class="nomjoueur">{{ getInitials(joueursA[2]?.nom, joueursA[2]?.prenom) }}</div> <!-- A3 -->
             </div>
           </div>
+          <div class="EquipeA" >Equipe A</div>
+          <div class="EquipeB" >Equipe B</div>
           <div class="surface-bas">
             <div class="joueur">
               <div class="nomjoueur">{{ getInitials(joueursB[2]?.nom, joueursB[2]?.prenom) }}</div> <!-- B3 -->
@@ -168,7 +172,8 @@ export default {
 }
 
 .container {
-  padding-bottom: 15px;
+  margin-top: 10px;
+  padding: 0 15px;
   display: flex;
   justify-content: space-evenly;
 }
@@ -176,7 +181,6 @@ export default {
 .terrain {
   position: relative;
   width: 600px;
-  height: 600px;
   background-color: #006400; /* Couleur du terrain */
   border: 2px solid #fff;
   border-radius: 10px;
@@ -252,7 +256,6 @@ export default {
   bottom: 0;
 }
 
-
 .centre {
   position: absolute;
   top: 50%;
@@ -321,11 +324,30 @@ export default {
   letter-spacing: 1px;
 }
 
+.EquipeA, .EquipeB {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2); /* Blanc très transparent */
+  text-align: center;
+  width: 100%;
+}
+
+.EquipeA {
+  top: 35%;
+  left: 0;
+}
+
+.EquipeB {
+  bottom: 35%;
+  left: 0;
+}
+
 .information {
   position: relative;
   width: 580px;
-  height: 570px;
-  /*background: linear-gradient(20deg, rgba(105,170,131,1) 0%, rgb(0, 100, 0) 52%, rgba(114,184,142,1) 100%);*/
+  height: 550px;
   background: url("../assets/styles/img/image-mesh-gradient.png");
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombre douce */
@@ -334,16 +356,14 @@ export default {
   border: 2px solid white;
 }
 
-
 /* Header de l'information */
 .information-header {
   position: sticky;
   top: 0;
   background-color: rgb(0, 0, 0, 0.4);
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
   z-index: 1;
 }
 
@@ -352,7 +372,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .team-name {
@@ -381,8 +400,8 @@ export default {
 .actions-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  max-height: calc(100% - 150px);
+  gap: 7px;
+  max-height: calc(100% - 92px);
   overflow-y: scroll;
 }
 
@@ -401,6 +420,22 @@ export default {
 
 .actions-container::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.8);
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+  margin: 15px 0;
+}
+.separator span {
+  flex: 1;
+  height: 1px;
+  background-color: #ffffff ;
+  margin: 0 10px;
 }
 
 /* Action individuelle */

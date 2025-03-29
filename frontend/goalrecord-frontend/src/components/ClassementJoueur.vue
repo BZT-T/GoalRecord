@@ -15,8 +15,15 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(joueur, index) in joueurs" :key="index">
-            <td>{{ index + 1 }}</td>
+          <tr v-for="(joueur, index) in joueurs" :key="index" :class="getPositionClass(index)">
+            <td>
+                  <span>
+                  <span v-if="index === 0">🥇</span>
+                  <span v-else-if="index === 1">🥈</span>
+                  <span v-else-if="index === 2">🥉</span>
+                  <span v-else>{{ index + 1 }}</span>
+                </span>
+            </td>
             <td>{{ getInitials(joueur.nom, joueur.prenom) }}</td>
             <td>{{ joueur.nbMatch }}</td>
             <td>{{ joueur.nbBut }}</td>
@@ -29,6 +36,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -59,6 +67,16 @@ export default {
     },
     goBack() {
       this.$router.go(-1);
+    },
+    getPositionClass(index) {
+      if (index === 0) {
+        return 'first-position';
+      } else if (index === 1) {
+        return 'second-position';
+      } else if (index === 2) {
+        return 'third-position';
+      }
+      return '';
     }
   }
 };
@@ -115,10 +133,6 @@ td {
   border-bottom: 1px solid white;
   font-size: 1.5rem;
   background-color: rgba(213, 246, 213, 0.47);
-}
-
-tr:hover {
-  background-color: rgba(0, 100, 0, 0.2); /* léger survol des lignes */
 }
 
 .table-container::-webkit-scrollbar {
@@ -189,4 +203,28 @@ tr:hover {
     font-size: 1.25rem;
   }
 }
+
+.first-position {
+  background-color: rgba(255, 250, 0, 0.67); /* Couleur or pour la première position */
+  color: black;
+  font-weight: bold;
+}
+
+.second-position {
+  background-color: rgba(192, 192, 192, 0.67); /* Couleur argentée pour la deuxième position */
+  color: black;
+  font-weight: bold;
+}
+
+.third-position {
+  background-color: rgba(205, 127, 50, 0.67); /* Couleur bronze pour la troisième position */
+  color: black;
+  font-weight: bold;
+}
+
+.first-position, .second-position, .third-position {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
 </style>
