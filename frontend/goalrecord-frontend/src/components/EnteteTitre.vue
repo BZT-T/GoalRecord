@@ -1,8 +1,8 @@
 <template>
-  <header class="header">
+  <header class="text-center text-xl font-roboto text-white">
     <div class="container">
-       <h1>{{ saison.nom }}</h1>
-        <p>{{ saison.anneedebut }} - {{ saison.anneefin }}</p>
+       <h1 class="text-3xl font-bold uppercase text-4xl sm:text-5xl md:text-6xl font-bold text-shadow-md">{{ saison.nom }}</h1>
+        <p class="text-xl sm:text-2xl text-base sm:text-lg italic">{{ saison.anneedebut }} - {{ saison.anneefin }}</p>
     </div>
   </header>
 </template>
@@ -34,22 +34,4 @@ export default {
 </script>
 
 <style scoped>
-/* Style de base, commun à toutes les saisons */
-.header {
-  text-align: center;
-  font-size: 20px;
-  font-family: 'Roboto', sans-serif;
-}
-
-.header h1 {
-  font-size: 3rem;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.header p {
-  font-size: 1.2rem;
-  font-style: italic;
-}
-
 </style>
