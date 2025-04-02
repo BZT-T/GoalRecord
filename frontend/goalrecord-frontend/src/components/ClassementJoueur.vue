@@ -1,22 +1,22 @@
 <template>
-  <div class="overflow">
-    <button class="button-53" @click="goBack" role="button">Retour</button>
-    <div class="classement-body">
-      <div class="table-container">
-        <table>
+  <div class="overflow-hidden max-h-screen">
+    <button class="button-53 bg-[#006400] border-0 text-white flex justify-center items-center font-sans text-[1rem] font-bold leading-[1.75rem] p-[0.75rem_1.65rem] relative text-center text-black border-b-2 max-w-[460px] w-full cursor-pointer transform rotate-[-2deg] select-none -webkit-select-none touch-manipulation m-2.5 focus:outline-none hover:after:border-white hover:after:bottom-[2px] hover:after:left-[2px] md:p-[0.75rem_3rem] md:text-[1.25rem]" @click="goBack" role="button">Retour</button>
+    <div class="flex flex-col items-center text-white min-h-screen p-5">
+      <div class="table-container max-h-[550px] overflow-y-auto w-4/5 bg-[rgba(0,0,0,0.3)] rounded-[10px] shadow-lg">
+        <table class="w-full border-collapse text-white p-2.5">
           <thead>
           <tr>
-            <th>Position</th>
-            <th>Joueur</th>
-            <th>Matchs joués</th>
-            <th>Buts</th>
-            <th>Passes décisives</th>
-            <th>GA/A</th>
+            <th class="p-3 text-center align-middle border-b-2 border-white text-[1.7rem] sticky top-0 bg-[#006400] z-10 shadow-lg">Position</th>
+            <th class="p-3 text-center align-middle border-b-2 border-white text-[1.7rem] sticky top-0 bg-[#006400] z-10 shadow-lg">Joueur</th>
+            <th class="p-3 text-center align-middle border-b-2 border-white text-[1.7rem] sticky top-0 bg-[#006400] z-10 shadow-lg">Matchs joués</th>
+            <th class="p-3 text-center align-middle border-b-2 border-white text-[1.7rem] sticky top-0 bg-[#006400] z-10 shadow-lg">Buts</th>
+            <th class="p-3 text-center align-middle border-b-2 border-white text-[1.7rem] sticky top-0 bg-[#006400] z-10 shadow-lg">Passes décisives</th>
+            <th class="p-3 text-center align-middle border-b-2 border-white text-[1.7rem] sticky top-0 bg-[#006400] z-10 shadow-lg">GA/A</th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="(joueur, index) in joueurs" :key="index" :class="getPositionClass(index)">
-            <td>
+            <td class="p-3 text-center align-middle border-b border-white text-[1.5rem] bg-[rgba(213,246,213,0.47)]">
                   <span>
                   <span v-if="index === 0">🥇</span>
                   <span v-else-if="index === 1">🥈</span>
@@ -24,11 +24,11 @@
                   <span v-else>{{ index + 1 }}</span>
                 </span>
             </td>
-            <td>{{ getInitials(joueur.nom, joueur.prenom) }}</td>
-            <td>{{ joueur.nbMatch }}</td>
-            <td>{{ joueur.nbBut }}</td>
-            <td>{{ joueur.nbPasseD }}</td>
-            <td>{{ getGoalAssistAverage(joueur.nbBut, joueur.nbPasseD, joueur.nbMatch) }}</td>
+            <td class="p-3 text-center align-middle border-b border-white text-[1.5rem] bg-[rgba(213,246,213,0.47)]">{{ getInitials(joueur.nom, joueur.prenom) }}</td>
+            <td class="p-3 text-center align-middle border-b border-white text-[1.5rem] bg-[rgba(213,246,213,0.47)]">{{ joueur.nbMatch }}</td>
+            <td class="p-3 text-center align-middle border-b border-white text-[1.5rem] bg-[rgba(213,246,213,0.47)]">{{ joueur.nbBut }}</td>
+            <td class="p-3 text-center align-middle border-b border-white text-[1.5rem] bg-[rgba(213,246,213,0.47)]">{{ joueur.nbPasseD }}</td>
+            <td class="p-3 text-center align-middle border-b border-white text-[1.5rem] bg-[rgba(213,246,213,0.47)]">{{ getGoalAssistAverage(joueur.nbBut, joueur.nbPasseD, joueur.nbMatch) }}</td>
           </tr>
           </tbody>
         </table>
@@ -70,11 +70,11 @@ export default {
     },
     getPositionClass(index) {
       if (index === 0) {
-        return 'first-position';
+        return "bg-[rgba(255,250,0,0.67)] text-black font-bold";
       } else if (index === 1) {
-        return 'second-position';
+        return "bg-[rgba(192,192,192,0.67)] text-black font-bold";
       } else if (index === 2) {
-        return 'third-position';
+        return "bg-[rgba(205,127,50,0.67)] text-black font-bold";
       }
       return '';
     }
@@ -83,57 +83,6 @@ export default {
 </script>
 
 <style scoped>
-.overflow {
-  overflow: hidden;
-  max-height: 100vh;
-}
-
-.classement-body {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  color: white;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.table-container {
-  max-height: 550px;
-  overflow-y: auto;
-  width: 80%;
-  background: rgba(0, 0, 0, 0.3); /* légère transparence pour l'effet visuel */
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  color: white;
-  padding: 10px;
-}
-
-th, td {
-  padding: 12px;
-  text-align: center;
-  vertical-align: middle;
-}
-
-th {
-  border-bottom: 2px solid #ffffff;
-  font-size: 1.7rem;
-  position: sticky;
-  top: 0;
-  background-color: #006400;
-  z-index: 1;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-td {
-  border-bottom: 1px solid white;
-  font-size: 1.5rem;
-  background-color: rgba(213, 246, 213, 0.47);
-}
 
 .table-container::-webkit-scrollbar {
   width: 8px;
@@ -152,37 +101,7 @@ td {
   background: rgba(255, 255, 255, 0.8);
 }
 
-.button-53 {
-  background-color: #006400;
-  border: 0 solid #E5E7EB;
-  box-sizing: border-box;
-  color: #ffffff;
-  display: flex;
-  font-family: ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: 1rem;
-  font-weight: 700;
-  justify-content: center;
-  line-height: 1.75rem;
-  padding: .75rem 1.65rem;
-  position: relative;
-  text-align: center;
-  text-decoration: none #000000 solid;
-  text-decoration-thickness: auto;
-  width: 100%;
-  max-width: 460px;
-  cursor: pointer;
-  transform: rotate(-2deg);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  margin: 8px;
-}
-
-.button-53:focus {
-  outline: 0;
-}
-
-.button-53:after {
+.button-53::after {
   content: '';
   position: absolute;
   border: 1px solid #ffffff;
@@ -192,39 +111,9 @@ td {
   height: calc(100% - 1px);
 }
 
-.button-53:hover:after {
+.button-53:hover::after {
   bottom: 2px;
   left: 2px;
-}
-
-@media (min-width: 768px) {
-  .button-53 {
-    padding: .75rem 3rem;
-    font-size: 1.25rem;
-  }
-}
-
-.first-position {
-  background-color: rgba(255, 250, 0, 0.67); /* Couleur or pour la première position */
-  color: black;
-  font-weight: bold;
-}
-
-.second-position {
-  background-color: rgba(192, 192, 192, 0.67); /* Couleur argentée pour la deuxième position */
-  color: black;
-  font-weight: bold;
-}
-
-.third-position {
-  background-color: rgba(205, 127, 50, 0.67); /* Couleur bronze pour la troisième position */
-  color: black;
-  font-weight: bold;
-}
-
-.first-position, .second-position, .third-position {
-  font-size: 1.5rem;
-  font-weight: bold;
 }
 
 </style>
