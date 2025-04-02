@@ -1,14 +1,13 @@
 <template>
-  <nav class="navbar">
-    <ul>
-      <li><router-link to="/">🏆 Liste des matchs</router-link></li>
-      <li><router-link to="/classement">📊 Classement des joueurs</router-link></li>
-      <router-link to="/creerMatch">Ajouter un match</router-link>
-      <router-link to="/creerJoueur">Créer un joueur</router-link>
-
+  <nav class="p-2.5 text-center">
+    <ul class="flex justify-center p-0 list-none no-underline text-white font-bold text-[1.1rem]">
+      <li class="mx-[15px] hover:text-[#f8c200] "><router-link to="/">🏆 Liste des matchs</router-link></li>
+      <li class="mx-[15px] hover:text-[#f8c200] "><router-link to="/classement">📊 Classement des joueurs</router-link></li>
+      <li class="mx-[15px] hover:text-[#f8c200] "><router-link to="/creerMatch">Ajouter un match</router-link></li>
+      <li class="mx-[15px] hover:text-[#f8c200] "><router-link to="/creerJoueur">Créer un joueur</router-link></li>
     </ul>
   </nav>
-  <div class="separator"></div>
+  <div class="w-1/2 h-1 bg-white mb-12 mx-auto rounded-[10px]"></div>
 </template>
 
 <script>
@@ -16,43 +15,3 @@ export default {
   name: "AppNavbar",
 };
 </script>
-
-<style scoped>
-.navbar {
-  padding: 10px;
-  text-align: center;
-}
-
-.navbar ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  margin: 0 500px;
-}
-
-.navbar li {
-  margin: 0 15px;
-}
-
-.navbar a {
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-}
-
-.navbar a:hover {
-  color: #f0a500;
-}
-
-.separator {
-  width: 50%;
-  height: 4px;
-  background: white;
-  margin-bottom: 50px;
-  margin-right: auto;
-  margin-left: auto;
-  border-radius: 10px;
-}
-
-</style>

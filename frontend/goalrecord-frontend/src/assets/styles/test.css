@@ -38,7 +38,7 @@ body {
 
 /* Bar de navigation */
 
-nav ul {
+/*nav ul {
     list-style-type: none;
     padding: 0;
     display: flex;
@@ -51,14 +51,14 @@ nav a {
     color: white;
     font-weight: bold;
     font-size: 1.1rem;
-}
+}*/
 
-nav a:hover {
+/*nav a:hover {
     color: var(--accent-color);
-}
+}*/
 
 /* Liste des matchs */
-.match-list {
+/*.match-list {
     margin: 20px auto;
     width: 90%;
     max-width: 1200px;
@@ -76,15 +76,15 @@ nav a:hover {
     margin-bottom: 15px;
     border-radius: 8px;
     font-size: 1.1rem;
-}
+}*/
 
-.match-list li:hover {
+/*.match-list li:hover {
     background-color: var(--accent-color);
     cursor: pointer;
-}
+}*/
 
 /* Effets dynamiques et animations */
-@keyframes bounce {
+/*@keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
         transform: translateY(0);
     }
@@ -94,9 +94,9 @@ nav a:hover {
     60% {
         transform: translateY(-5px);
     }
-}
-/* Pour enlever le soulignement bleu des liens */
+}*/
+/*!* Pour enlever le soulignement bleu des liens *!
 router-link a {
     text-decoration: none;
-    color: inherit; /* Changez la couleur si nécessaire */
-}
+    color: inherit; !* Changez la couleur si nécessaire *!
+}*/
