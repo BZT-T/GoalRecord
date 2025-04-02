@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-wrap gap-4 w-full">
-    <div v-for="match in matches" :key="match.idmatch" class="flex flex-col w-full h-auto border-2 border-black rounded-3xl bg-white shadow-lg p-4 transition-transform duration-300 cursor-pointer mx-12 mb-2.5 hover:scale-101"
+    <div v-for="match in matches" :key="match.idmatch" class="flex flex-col w-full h-auto border-2 border-black rounded-3xl bg-white shadow-lg p-4 transition-transform duration-300 cursor-pointer mx-0 lg:mx-12 mb-2.5 hover:scale-101"
          :class="{'winner': match.scoreEquipeA > match.scoreEquipeB}">
       <router-link :to="{ name: 'matchDetails', params: { id: match.idmatch } }" class="match-card-link">
         <div class="flex justify-between items-center">
@@ -12,17 +12,17 @@
             <div class="text-center text-xl font-bold pb-2.5">{{ new Date(match.dateMatch).toLocaleDateString() }}</div>
             <div class="flex justify-between items-center">
 
-              <!-- Nom des joueurs équipe A (horizontalement) -->
-              <div class="flex text-lg mb-1.25 team-a-players">
-                <p class="mx-1 my-0.75 italic" v-for="(player, index) in match.joueursA" :key="index">{{getInitials(player.nom, player.prenom)}}</p>
+              <!-- Nom des joueurs équipe A (horizontalement sur grands écrans, verticalement sur mobile) -->
+              <div class="flex flex-col sm:flex-row text-lg mb-1.25 team-a-players">
+                <p class="mx-1 my-0.75 italic whitespace-nowrap text-right" v-for="(player, index) in match.joueursA" :key="index">{{ getInitials(player.nom, player.prenom) }}</p>
               </div>
 
               <!-- Séparateur VS -->
               <div class="text-xl font-bold text-gray-800 px-4">VS</div>
 
-              <!-- Nom des joueurs équipe B (horizontalement) -->
-              <div class="flex text-lg mb-1.25 team-b-players">
-                <p class="mx-1 my-0.75 transform rotate-[0deg] skew-x-[10deg]" v-for="(player, index) in match.joueursB" :key="index">{{ getInitials(player.nom, player.prenom) }}</p>
+              <!-- Nom des joueurs équipe B (verticalement sur mobile, horizontalement sur les écrans plus grands) -->
+              <div class="flex flex-col sm:flex-row text-lg mb-1.25 team-b-players">
+                <p class="mx-1 my-0.75 transform rotate-[0deg] skew-x-[10deg] whitespace-nowrap text-left" v-for="(player, index) in match.joueursB" :key="index">{{ getInitials(player.nom, player.prenom) }}</p>
               </div>
 
             </div>
