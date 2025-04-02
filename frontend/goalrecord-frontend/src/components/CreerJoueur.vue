@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <h2>Créer un joueur</h2>
+  <div class="max-w-[400px] mx-auto my-5 p-5 bg-[#f8f9fa] rounded-lg shadow-lg">
+    <h2 class="text-center text-[#28a745]">Créer un joueur</h2>
     <form @submit.prevent="creerJoueur">
       <div class="form-group">
         <label for="nom">Nom :</label>
@@ -17,9 +17,9 @@
         <input type="number" id="age" v-model.number="joueur.age" required min="10" />
       </div>
 
-      <button type="submit" class="btn">Créer</button>
+      <button type="submit" class="w-full p-2.5 bg-[#28a745] text-white border-none rounded-md cursor-pointer text-lg hover:bg-[#218838]">Créer</button>
     </form>
-    <div v-if="showToast" class="toast">
+    <div v-if="showToast" class="fixed bottom-5 right-5 bg-[#4CAF50] text-white p-2.5 px-5 rounded-lg shadow-lg transition-opacity duration-500">
       {{ toastMessage }}
     </div>
 
@@ -64,19 +64,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  text-align: center;
-  color: #28a745;
-}
 
 .form-group {
   margin-bottom: 15px;
@@ -93,32 +80,5 @@ input {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
-
-.btn {
-  width: 100%;
-  padding: 10px;
-  background: #28a745;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.btn:hover {
-  background: #218838;
-}
-
-.toast {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  transition: opacity 0.5s;
 }
 </style>
