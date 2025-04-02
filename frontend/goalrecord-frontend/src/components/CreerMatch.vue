@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="flex flex-col text-white min-h-screen py-5 px-[150px]">
     <h2>Créer un match</h2>
 
     <div class="form-group">
@@ -22,13 +22,14 @@
       <input type="number" id="scoreB" v-model.number="scoreEquipeB" min="0" />
     </div>
 
-    <div class="recherche">
+    <div class="flex flex-col bg-white border border-gray-300 rounded-md">
       <input
           type="text"
           ref="rechercheInput"
           v-model="query"
           @input="rechercherJoueurs"
           placeholder="Rechercher un joueur..."
+          class="text-black"
       />
       <ul v-if="joueurs.length > 0">
         <li v-for="joueur in joueurs" :key="joueur.idjoueur" @click="ajouterJoueur(joueur)">
@@ -37,9 +38,9 @@
       </ul>
     </div>
 
-    <div class="equipes">
-      <div class="equipe">
-        <h3>Équipe A</h3>
+    <div class="flex justify-around mt-5">
+      <div class="bg-white p-2.5 rounded-lg w-1/2">
+        <h3 class="text-center text-black">Équipe A</h3>
         <ul>
           <li v-for="(joueur, index) in equipeA" :key="joueur.idjoueur">
             {{ joueur.nom }} {{ joueur.prenom }}
@@ -48,8 +49,8 @@
         </ul>
       </div>
 
-      <div class="equipe">
-        <h3>Équipe B</h3>
+      <div class="bg-white p-2.5 rounded-lg w-1/2">
+        <h3 class="text-center text-black">Équipe B</h3>
         <ul>
           <li v-for="(joueur, index) in equipeB" :key="joueur.idjoueur">
             {{ joueur.nom }} {{ joueur.prenom }}
@@ -59,10 +60,11 @@
       </div>
     </div>
 
-    <button @click="validerMatch">Créer le match</button>
+    <button @click="validerMatch" class="mt-5 p-2.5 bg-green-700 text-white border-none rounded-md cursor-pointer hover:bg-green-600">Créer le match</button>
 
     <!-- Ajout des buteurs -->
     <div v-if="afficherButeurs" class="buteurs">
+
       <h2>Ajouter des buteurs</h2>
 
       <div class="form-group">
@@ -89,18 +91,18 @@
         <input type="number" v-model.number="nouveauBut.minute" min="1" max="90" />
       </div>
 
-      <button @click="ajouterBut">Ajouter But</button>
+      <button @click="ajouterBut" class="mt-5 p-2.5 bg-green-700 text-white border-none rounded-md cursor-pointer hover:bg-green-600">Ajouter But</button>
 
       <ul>
         <li v-for="(but, index) in buts" :key="index">
           {{ afficherNomJoueur(but.buteur) }}
           ({{ but.minute }}')
           <span v-if="but.passeur">passe de {{ afficherNomJoueur(but.passeur) }}</span>
-          <span class="remove" @click="supprimerBut(index)">❌</span>
+          <span class="text-red-500 cursor-pointer ml-2.5" @click="supprimerBut(index)">❌</span>
         </li>
       </ul>
 
-      <button @click="validerButs">Valider les buts</button>
+      <button @click="validerButs" class="mt-5 p-2.5 bg-green-700 text-white border-none rounded-md cursor-pointer hover:bg-green-600">Valider les buts</button>
     </div>
   </div>
 </template>
@@ -217,13 +219,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  color: white;
-  min-height: 100vh;
-  padding: 20px 150px;
-}
 
 h2 {
   text-align: center;
@@ -237,14 +232,6 @@ h2 {
 
 input {
   padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.recherche {
-  display: flex;
-  flex-direction: column;
-  background: #ffffff;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -267,41 +254,4 @@ li:hover {
   background-color: #f0f0f0;
 }
 
-.equipes {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-}
-
-.equipe {
-  background: #ffffff;
-  padding: 10px;
-  border-radius: 5px;
-  width: 45%;
-}
-
-.equipe h3 {
-  text-align: center;
-  color: black;
-}
-
-.remove {
-  color: red;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-button {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: green;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: darkgreen;
-}
 </style>
