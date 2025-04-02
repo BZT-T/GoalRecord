@@ -1,40 +1,40 @@
 <template>
-  <div class="match-container">
-    <div v-for="match in matches" :key="match.idmatch" class="match-card"
+  <div class="flex flex-wrap gap-4 w-full">
+    <div v-for="match in matches" :key="match.idmatch" class="flex flex-col w-full h-auto border-2 border-black rounded-3xl bg-white shadow-lg p-4 transition-transform duration-300 cursor-pointer mx-12 mb-2.5 hover:scale-101"
          :class="{'winner': match.scoreEquipeA > match.scoreEquipeB}">
       <router-link :to="{ name: 'matchDetails', params: { id: match.idmatch } }" class="match-card-link">
-        <div class="card-body">
-          <div class="team team-a">
-            <div class="score">{{ match.scoreEquipeA }}</div>
+        <div class="flex justify-between items-center">
+          <div class="pr-2.5 border-r border-gray-300">
+
+            <div class="text-5xl font-bold">{{ match.scoreEquipeA }}</div>
           </div>
           <div>
-            <div class="match-date">{{ new Date(match.dateMatch).toLocaleDateString() }}</div>
-            <div class="match-card-body">
+            <div class="text-center text-xl font-bold pb-2.5">{{ new Date(match.dateMatch).toLocaleDateString() }}</div>
+            <div class="flex justify-between items-center">
 
               <!-- Nom des joueurs équipe A (horizontalement) -->
-              <div class="players team-a-players">
-                <p v-for="(player, index) in match.joueursA" :key="index">{{getInitials(player.nom, player.prenom)}}</p>
+              <div class="flex text-lg mb-1.25 team-a-players">
+                <p class="mx-1 my-0.75 italic" v-for="(player, index) in match.joueursA" :key="index">{{getInitials(player.nom, player.prenom)}}</p>
               </div>
 
               <!-- Séparateur VS -->
-              <div class="vs-separator">VS</div>
+              <div class="text-xl font-bold text-gray-800 px-4">VS</div>
 
               <!-- Nom des joueurs équipe B (horizontalement) -->
-              <div class="players team-b-players">
-                <p v-for="(player, index) in match.joueursB" :key="index">{{ getInitials(player.nom, player.prenom) }}</p>
+              <div class="flex text-lg mb-1.25 team-b-players">
+                <p class="mx-1 my-0.75 transform rotate-[0deg] skew-x-[10deg]" v-for="(player, index) in match.joueursB" :key="index">{{ getInitials(player.nom, player.prenom) }}</p>
               </div>
 
             </div>
           </div>
-          <div class="team team-b">
-            <div class="score">{{ match.scoreEquipeB }}</div>
+          <div class="pl-2.5 border-l border-gray-300">
+            <div class="text-5xl font-bold">{{ match.scoreEquipeB }}</div>
           </div>
         </div>
       </router-link>
     </div>
   </div>
 </template>
-
 
 <script>
 import axios from "axios";
@@ -60,102 +60,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-.match-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  width: 100%;
-}
-
-.match-card {
-  display: flex;
-  flex-direction: column;
-  width: 100%; /* Occupe toute la largeur de l'espace disponible */
-  height: auto;
-  border: 2px solid black;
-  border-radius: 25px;
-  background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  transition: transform 0.3s;
-  cursor: pointer;
-  margin: 0px 50px 10px 50px;
-}
-
-.match-date {
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  padding-bottom: 10px;
-}
-
-.match-card-body {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row; /* Alignement horizontal des éléments */
-}
-
-.card-body {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row;
-}
-
-.team-a {
-  padding-right: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.team-b {
-  padding-left: 10px;
-  border-left: 1px solid #ddd;
-}
-
-.players {
-  display: flex; /* Mettre les joueurs sur une ligne */
-  flex-direction: row; /* Horizontalement */
-  font-size: 18px;
-  margin-bottom: 5px;
-}
-
-.players p {
-  margin: 3px 5px; /* Espacement horizontal entre les joueurs */
-}
-
-.team-a-players p {
-  font-style: italic;
-
-}
-
-.team-b-players p {
-  transform: scale(1) rotate(0deg) translate(0px, 0px) skew(10deg, 0deg);
-}
-
-.score {
-  font-size: 50px;
-  font-weight: bold;
-}
-
-.vs-separator {
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-  padding: 0 15px;
-}
-
-.match-card:hover {
-  transform: scale(1.02);
-}
-
-.match-card-link {
-  text-decoration: none;
-  color: inherit;
-}
-
-
-</style>
