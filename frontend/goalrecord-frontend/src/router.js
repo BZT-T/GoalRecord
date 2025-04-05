@@ -7,7 +7,7 @@ import CreerMatch from "./components/CreerMatch.vue";
 
 const routes = [
     { path: "/", component: MatchList, meta: { hideHeader: false,} },
-    { path: "/classement", component: ClassementJoueur, meta: { hideHeader: true,} },
+    { path: "/classement", component: ClassementJoueur, meta: { hideHeader: false,} },
     { path: "/matchDetails/:id", name: "matchDetails", component: MatchDetails, meta: { hideHeader: true,} },
     { path: "/creerJoueur", component: CreerJoueur, meta: { hideHeader: false,} },
     { path: "/creerMatch", component: CreerMatch, meta: { hideHeader: false,} },

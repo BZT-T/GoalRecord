@@ -7,7 +7,7 @@
       <li class="mx-[15px] hover:text-[#f8c200] "><router-link to="/creerJoueur">Créer un joueur</router-link></li>
     </ul>
   </nav>
-  <div class="w-1/2 h-1 bg-white mb-12 mx-auto rounded-[10px]"></div>
+  <div class="w-1/2 h-1 bg-white mb-2 mx-auto rounded-[10px]"></div>
 </template>
 
 <script>
