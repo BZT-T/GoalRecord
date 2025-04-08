@@ -21,7 +21,7 @@ export default {
     };
   },
   mounted() {
-    axios.get('http://192.168.1.12:3000/api/saison-actuelle')
+    axios.get('http://10.126.4.177:3000/api/saison-actuelle')
         .then(response => {
           console.log(response.data);
           this.saison = response.data;
