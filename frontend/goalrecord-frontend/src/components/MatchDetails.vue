@@ -1,7 +1,7 @@
 <template>
-  <div class="overflow">
+    <div class="overflow-hidden max-h-screen">
     <button class="button-53" @click="goBack" role="button">Retour</button>
-    <div class="container">
+    <div class="mt-15 px-4 flex justify-evenly">
       <div class="information">
         <div class="information-header">
           <div class="score-container">
@@ -31,10 +31,9 @@
         </div>
       </div>
 
-
-      <div class="terrain">
-        <div class="zone zone-gauche">
-          <div class="zone-gauche-haut">
+      <div class="relative w-[600px] bg-[#006400] border-2 border-white rounded-lg">
+        <div class="absolute top-0 w-[170px] h-full bg-white/20 absolute left-0">
+          <div class="flex flex-col justify-evenly h-[50%]">
             <div class="joueur">
               <div class="point"></div>
               <div class="nomjoueur">{{ getInitials(joueursA[0]?.nom, joueursA[0]?.prenom) }}</div> <!-- A1 -->
@@ -45,7 +44,7 @@
             </div>
           </div>
 
-          <div class="zone-gauche-bas">
+          <div class="flex flex-col justify-evenly h-[50%]">
             <div class="joueur">
               <div class="nomjoueur">{{ getInitials(joueursB[0]?.nom, joueursB[0]?.prenom) }}</div> <!-- B1 -->
               <div class="point"></div>
@@ -57,8 +56,8 @@
           </div>
         </div>
 
-        <div class="milieu">
-          <div class="surface-haut">
+        <div class="absolute top-0 left-[150px] right-[150px] h-full flex flex-col justify-between">
+          <div class="border-2 border-t-0 border-white flex justify-center absolute top-0 relative w-[60%] h-[100px] mx-auto">
             <div class="joueur">
               <div class="point"></div>
               <div class="nomjoueur">{{ getInitials(joueursA[2]?.nom, joueursA[2]?.prenom) }}</div> <!-- A3 -->
@@ -66,7 +65,7 @@
           </div>
           <div class="EquipeA" >Equipe A</div>
           <div class="EquipeB" >Equipe B</div>
-          <div class="surface-bas">
+          <div class="border-2 border-b-0 border-white absolute bottom-0 relative w-[60%] h-[100px] mx-auto">
             <div class="joueur">
               <div class="nomjoueur">{{ getInitials(joueursB[2]?.nom, joueursB[2]?.prenom) }}</div> <!-- B3 -->
               <div class="point"></div>
@@ -74,8 +73,8 @@
           </div>
         </div>
 
-        <div class="zone zone-droite">
-          <div class="zone-droite-haut">
+        <div class="absolute top-0 w-[170px] h-full bg-white/20 absolute right-0">
+          <div class="flex flex-col justify-evenly h-[50%]">
             <div class="joueur">
               <div class="point"></div>
               <div class="nomjoueur">{{ getInitials(joueursA[3]?.nom, joueursA[3]?.prenom) }}</div> <!-- A4 -->
@@ -86,7 +85,7 @@
             </div>
           </div>
 
-          <div class="zone-droite-bas">
+          <div class="flex flex-col justify-evenly h-[50%]">
             <div class="joueur">
               <div class="nomjoueur">{{ getInitials(joueursB[3]?.nom, joueursB[3]?.prenom) }}</div> <!-- B4 -->
               <div class="point"></div>
@@ -98,7 +97,7 @@
           </div>
         </div>
 
-        <div class="centre">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100px] h-[100px] bg-white/30 rounded-full">
           <div class="cercle-centrale"></div>
         </div>
 
@@ -166,35 +165,35 @@ export default {
 
 <style scoped>
 
-.overflow {
+/*.overflow {
   overflow: hidden;
   max-height: 100vh;
-}
+}*/
 
-.container {
+/*.container {
   margin-top: 10px;
   padding: 0 15px;
   display: flex;
   justify-content: space-evenly;
-}
+}*/
 
-.terrain {
+/*.terrain {
   position: relative;
   width: 600px;
-  background-color: #006400; /* Couleur du terrain */
+  background-color: #006400; !* Couleur du terrain *!
   border: 2px solid #fff;
   border-radius: 10px;
-}
+}*/
 
-.zone {
+/*.zone {
   position: absolute;
   top: 0;
   width: 170px;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.2);
-}
+}*/
 
-.zone-gauche-haut,
+/*.zone-gauche-haut,
 .zone-gauche-bas,
 .zone-droite-haut,
 .zone-droite-bas {
@@ -202,61 +201,50 @@ export default {
   flex-direction: column;
   justify-content: space-evenly;
   height: 50%;
-}
+}*/
 
-.zone-gauche {
+/*.zone-gauche {
   left: 0;
 }
 
 .zone-droite {
   right: 0;
-}
+}*/
 
-.milieu {
+/*.milieu {
   position: absolute;
   top: 0;
-  left: 150px;
-  right: 150px;
-  height: 100%;
+  left: 150px; !* Après la zone gauche *!
+  right: 150px; !* Avant la zone droite *!
+  height: 100%; !* Remplir toute la hauteur *!
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-}
+  justify-content: space-between; !* Espacement entre les surfaces haut et bas *!
+}*/
 
-.milieu {
-  position: absolute;
-  top: 0;
-  left: 150px; /* Après la zone gauche */
-  right: 150px; /* Avant la zone droite */
-  height: 100%; /* Remplir toute la hauteur */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Espacement entre les surfaces haut et bas */
-}
-
-.surface-haut,
+/*.surface-haut,
 .surface-bas {
   position: relative;
   width: 60%;
   height: 100px;
   margin: 0 auto;
-}
+}*/
 
-.surface-haut {
+/*.surface-haut {
   border: 2px solid white;
   border-top: none;
   top: 0;
   display: flex;
   justify-content: center;
-}
+}*/
 
-.surface-bas {
+/*.surface-bas {
   border: 2px solid white;
   border-bottom: none;
   bottom: 0;
-}
+}*/
 
-.centre {
+/*.centre {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -265,7 +253,7 @@ export default {
   height: 100px;
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-}
+}*/
 
 .cercle-centrale {
   position: absolute;
