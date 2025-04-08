@@ -16,8 +16,6 @@
   </span>
       </button>
 
-
-
       <!-- Contenu déroulant -->
       <transition name="fade" mode="out-in">
         <div v-if="openedMonths[monthYear]">
