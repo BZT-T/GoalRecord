@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import apiClient from '@/services/api';
 import BoutonRetour from "@/components/BoutonRetour.vue";
 
 export default {
@@ -132,7 +132,7 @@ export default {
   methods: {
     async recupererMatchDetails() {
       try {
-        const response = await axios.get(`http://localhost:3000/api/match/${this.matchId}`);
+        const response = await apiClient.get(`match/${this.matchId}`);
         const matchData = response.data;
         this.dateMatch = matchData.dateMatch;
         this.lieuMatch = matchData.lieuMatch;

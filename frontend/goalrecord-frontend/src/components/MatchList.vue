@@ -76,13 +76,13 @@
 </template>
 
 <script>
-import axios from "axios";
+import apiClient from '@/services/api';
 
 export default {
   data() {
     return {
       matches: [],
-      openedMonths: {} // suivi des mois ouverts
+      openedMonths: {}
     };
   },
   computed: {
@@ -104,7 +104,7 @@ export default {
     }
   },
   mounted() {
-    axios.get("http://10.126.4.177:3000/api/matchs")
+    apiClient.get("matchs")
         .then(response => {
           this.matches = response.data;
 

@@ -38,7 +38,7 @@
 
 
 <script>
-import axios from 'axios';
+import apiClient from '@/services/api';
 
 export default {
   name: "ClassementJoueur",
@@ -48,7 +48,7 @@ export default {
     };
   },
   mounted() {
-    axios.get('http://10.126.4.177:3000/api/classement')
+    apiClient.get('classement')
         .then(response => {
           this.joueurs = response.data;
           console.log(this.joueurs);
