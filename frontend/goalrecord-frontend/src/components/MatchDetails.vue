@@ -1,22 +1,22 @@
 <template>
   <div class="md:overflow-hidden md:max-h-screen">
     <BoutonRetour></BoutonRetour>
-    <div id="conteneur" class="mt-15 px-4 flex justify-evenly flex-col sm:flex-row">
+    <div id="conteneur" class="px-4 gap-4 md:gap-0 md:mt-15 md:px-4 flex justify-evenly flex-col md:flex-row">
       <div id="terrain" class="flex relative md:w-[580px] h-[550px] bg-[#006400] border-2 border-white rounded-lg">
-        <div id="zone-transparent-gauche" class="absolute top-0 w-[100px] lg:w-[170px] h-full bg-white/20 absolute left-0">
+        <div id="zone-transparent-gauche" class="absolute top-0 w-[100px] md:w-[170px] h-full bg-white/20 absolute left-0">
 
           <div id="zone-transparent-gauche-haut" class="flex flex-col justify-evenly h-[50%]">
 
             <div id="A1" class="flex flex-col items-center justify-center text-center">
-              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+              <div class="w-[35px] h-[35px] md:w-[50px] md:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="whitespace-nowrap text-[clamp(16px,4vw,26px)] font-bold text-white font-sans capitalize tracking-[1px]">
                 {{ getInitials(joueursA[0]?.nom, joueursA[0]?.prenom) }}
               </div>
             </div>
 
             <div id="A2" class="flex flex-col items-center justify-center text-center">
-              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+              <div class="w-[35px] h-[35px] md:w-[50px] md:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="whitespace-nowrap text-[clamp(16px,4vw,26px)] font-bold text-white font-sans capitalize tracking-[1px]">
                 {{ getInitials(joueursA[1]?.nom, joueursA[1]?.prenom) }}
               </div>
             </div>
@@ -24,25 +24,25 @@
 
           <div id="zone-transparent-gauche-bas" class="flex flex-col justify-evenly h-[50%]">
             <div id="B1" class="flex flex-col items-center justify-center text-center">
-              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+              <div class="whitespace-nowrap text-[clamp(16px,4vw,26px)] font-bold text-white font-sans capitalize tracking-[1px]">
                 {{ getInitials(joueursB[0]?.nom, joueursB[0]?.prenom) }}
               </div>
-              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="w-[35px] h-[35px] md:w-[50px] md:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
             </div>
             <div id="B2" class="flex flex-col items-center justify-center text-center">
-              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+              <div class="whitespace-nowrap text-[clamp(16px,4vw,26px)] font-bold text-white font-sans capitalize tracking-[1px]">
                 {{ getInitials(joueursB[1]?.nom, joueursB[1]?.prenom) }}
               </div>
-              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="w-[35px] h-[35px] md:w-[50px] md:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
             </div>
           </div>
         </div>
 
         <div id="zone-milieu" class="absolute top-0 left-[100px] right-[100px] md:left-[150px] md:right-[150px] h-full flex flex-col justify-between">
-          <div id="surface-haut" class="border-2 border-t-0 border-white flex justify-center absolute top-0 relative w-[90%] lg:w-[60%] h-[100px] mx-auto">
+          <div id="surface-haut" class="border-2 border-t-0 border-white flex justify-center absolute top-0 relative w-[90%] md:w-[60%] h-[100px] mx-auto">
             <div id="A3" class="flex flex-col items-center justify-center text-center">
-              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+              <div class="w-[35px] h-[35px] md:w-[50px] md:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="whitespace-nowrap text-[clamp(16px,4vw,26px)] font-bold text-white font-sans capitalize tracking-[1px]">
                 {{ getInitials(joueursA[2]?.nom, joueursA[2]?.prenom) }}
               </div>
             </div>
@@ -51,30 +51,30 @@
           <div class="absolute left-0 top-[35%] text-2xl font-bold uppercase text-white/20 text-center w-full">Equipe A</div>
           <div class="absolute left-0 bottom-[35%] text-2xl font-bold uppercase text-white/20 text-center w-full">Equipe B </div>
 
-          <div id="surface-bas" class="border-2 border-b-0 border-white absolute bottom-0 relative w-[90%] lg:w-[60%] h-[100px] mx-auto">
+          <div id="surface-bas" class="border-2 border-b-0 border-white absolute bottom-0 relative w-[90%] md:w-[60%] h-[100px] mx-auto">
 
             <div id="B3" class="flex flex-col items-center justify-center text-center">
-              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+              <div class="whitespace-nowrap text-[clamp(16px,4vw,26px)] font-bold text-white font-sans capitalize tracking-[1px]">
                 {{ getInitials(joueursB[2]?.nom, joueursB[2]?.prenom) }}
               </div>
-              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="w-[35px] h-[35px] md:w-[50px] md:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
 
             </div>
           </div>
         </div>
 
-        <div id="zone-transparent-droite" class="absolute top-0 w-[100px] lg:w-[170px] h-full bg-white/20 absolute right-0">
+        <div id="zone-transparent-droite" class="absolute top-0 w-[100px] md:w-[170px] h-full bg-white/20 absolute right-0">
 
           <div id="zone-transparent-droite-haut" class="flex flex-col justify-evenly h-[50%] ">
             <div id="A4" class="flex flex-col items-center justify-center text-center">
-              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+              <div class="w-[35px] h-[35px] md:w-[50px] md:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="whitespace-nowrap text-[clamp(16px,4vw,26px)] font-bold text-white font-sans capitalize tracking-[1px]">
                 {{ getInitials(joueursA[3]?.nom, joueursA[3]?.prenom) }}
               </div>
             </div>
             <div id="A5" class="flex flex-col items-center justify-center text-center">
-              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+              <div class="w-[35px] h-[35px] md:w-[50px] md:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="whitespace-nowrap text-[clamp(16px,4vw,26px)] font-bold text-white font-sans capitalize tracking-[1px]">
                 {{ getInitials(joueursA[4]?.nom, joueursA[4]?.prenom) }}
               </div>
             </div>
@@ -83,17 +83,17 @@
           <div id="zone-transparent-droite-bas" class="flex flex-col justify-evenly h-[50%]">
 
             <div id="B4" class="flex flex-col items-center justify-center text-center">
-              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+              <div class="whitespace-nowrap text-[clamp(16px,4vw,26px)] font-bold text-white font-sans capitalize tracking-[1px]">
                 {{ getInitials(joueursB[3]?.nom, joueursB[3]?.prenom) }}
               </div>
-              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="w-[35px] h-[35px] md:w-[50px] md:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
             </div>
 
             <div id="B5" class="flex flex-col items-center justify-center text-center">
-              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+              <div class="whitespace-nowrap text-[clamp(16px,4vw,26px)] font-bold text-white font-sans capitalize tracking-[1px]">
                 {{ getInitials(joueursB[4]?.nom, joueursB[4]?.prenom) }}
               </div>
-              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="w-[35px] h-[35px] md:w-[50px] md:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
             </div>
 
           </div>
@@ -108,15 +108,14 @@
 
       </div>
 
-      <div id="information"
-           class="relative md:w-[580px] md:h-[550px] bg-[url('./assets/styles/img/image-mesh-gradient.png')] rounded-[10px] shadow-[0_4px_10px_rgba(0,0,0,0.1)] p-5 font-sans border-2 border-white">
-        <div class="sticky top-0 bg-black/40 p-2.5 rounded-[8px] shadow-[0_2px_10px_rgba(0,0,0,0.1)] z-[1]">
-          <div class="flex justify-between items-center">
-            <span class="text-2xl font-bold text-white uppercase">Équipe A</span>
-            <h2 class="text-4xl font-bold mx-4 text-white shadow-md">{{ scoreEquipeA }} - {{ scoreEquipeB }}</h2>
-            <span class="text-2xl font-bold text-white uppercase">Équipe B</span>
+      <div id="information" class="relative md:w-[580px] h-[550px] bg-[url('./assets/styles/img/image-mesh-gradient.png')] rounded-[10px] shadow-[0_4px_10px_rgba(0,0,0,0.1)] p-5 font-sans border-2 border-white">
+        <div id="entete-information" class="sticky top-0 bg-black/40 p-2.5 rounded-[8px] shadow-[0_2px_10px_rgba(0,0,0,0.1)] z-[1]">
+          <div id="score" class="flex justify-between items-center">
+            <span class="text-xl md:text-2xl font-bold text-white uppercase">Équipe A</span>
+            <h2 class="text-xl md:text-4xl font-bold mx-4 text-white shadow-md">{{ scoreEquipeA }} - {{ scoreEquipeB }}</h2>
+            <span class="text-xl md:text-2xl font-bold text-white uppercase">Équipe B</span>
           </div>
-          <p class="text-center text-sm text-white mt-1 font-bold">{{ formatDate(dateMatch) }} - {{ lieuMatch }}</p>
+          <p id="ville" class="text-center text-sm text-white mt-1 font-bold">{{ formatDate(dateMatch) }} - {{ lieuMatch }}</p>
         </div>
         <div class="actions-container flex flex-col gap-2.5 max-h-[calc(100%-92px)] overflow-y-scroll">
           <div class="flex items-center justify-center text-xl font-bold text-white my-3.5"><span
