@@ -1,8 +1,115 @@
 <template>
-    <div class="overflow-hidden max-h-screen">
-      <BoutonRetour></BoutonRetour>
-    <div class="mt-15 px-4 flex justify-evenly">
-      <div class="relative w-[580px] h-[550px] bg-[url('./assets/styles/img/image-mesh-gradient.png')] rounded-[10px] shadow-[0_4px_10px_rgba(0,0,0,0.1)] p-5 font-sans border-2 border-white">
+  <div class="md:overflow-hidden md:max-h-screen">
+    <BoutonRetour></BoutonRetour>
+    <div id="conteneur" class="mt-15 px-4 flex justify-evenly flex-col sm:flex-row">
+      <div id="terrain" class="flex relative md:w-[580px] h-[550px] bg-[#006400] border-2 border-white rounded-lg">
+        <div id="zone-transparent-gauche" class="absolute top-0 w-[100px] lg:w-[170px] h-full bg-white/20 absolute left-0">
+
+          <div id="zone-transparent-gauche-haut" class="flex flex-col justify-evenly h-[50%]">
+
+            <div id="A1" class="flex flex-col items-center justify-center text-center">
+              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+                {{ getInitials(joueursA[0]?.nom, joueursA[0]?.prenom) }}
+              </div>
+            </div>
+
+            <div id="A2" class="flex flex-col items-center justify-center text-center">
+              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+                {{ getInitials(joueursA[1]?.nom, joueursA[1]?.prenom) }}
+              </div>
+            </div>
+          </div>
+
+          <div id="zone-transparent-gauche-bas" class="flex flex-col justify-evenly h-[50%]">
+            <div id="B1" class="flex flex-col items-center justify-center text-center">
+              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+                {{ getInitials(joueursB[0]?.nom, joueursB[0]?.prenom) }}
+              </div>
+              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+            </div>
+            <div id="B2" class="flex flex-col items-center justify-center text-center">
+              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+                {{ getInitials(joueursB[1]?.nom, joueursB[1]?.prenom) }}
+              </div>
+              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="zone-milieu" class="absolute top-0 left-[100px] right-[100px] md:left-[150px] md:right-[150px] h-full flex flex-col justify-between">
+          <div id="surface-haut" class="border-2 border-t-0 border-white flex justify-center absolute top-0 relative w-[90%] lg:w-[60%] h-[100px] mx-auto">
+            <div id="A3" class="flex flex-col items-center justify-center text-center">
+              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+                {{ getInitials(joueursA[2]?.nom, joueursA[2]?.prenom) }}
+              </div>
+            </div>
+          </div>
+
+          <div class="absolute left-0 top-[35%] text-2xl font-bold uppercase text-white/20 text-center w-full">Equipe A</div>
+          <div class="absolute left-0 bottom-[35%] text-2xl font-bold uppercase text-white/20 text-center w-full">Equipe B </div>
+
+          <div id="surface-bas" class="border-2 border-b-0 border-white absolute bottom-0 relative w-[90%] lg:w-[60%] h-[100px] mx-auto">
+
+            <div id="B3" class="flex flex-col items-center justify-center text-center">
+              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+                {{ getInitials(joueursB[2]?.nom, joueursB[2]?.prenom) }}
+              </div>
+              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+
+            </div>
+          </div>
+        </div>
+
+        <div id="zone-transparent-droite" class="absolute top-0 w-[100px] lg:w-[170px] h-full bg-white/20 absolute right-0">
+
+          <div id="zone-transparent-droite-haut" class="flex flex-col justify-evenly h-[50%] ">
+            <div id="A4" class="flex flex-col items-center justify-center text-center">
+              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+                {{ getInitials(joueursA[3]?.nom, joueursA[3]?.prenom) }}
+              </div>
+            </div>
+            <div id="A5" class="flex flex-col items-center justify-center text-center">
+              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+                {{ getInitials(joueursA[4]?.nom, joueursA[4]?.prenom) }}
+              </div>
+            </div>
+          </div>
+
+          <div id="zone-transparent-droite-bas" class="flex flex-col justify-evenly h-[50%]">
+
+            <div id="B4" class="flex flex-col items-center justify-center text-center">
+              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+                {{ getInitials(joueursB[3]?.nom, joueursB[3]?.prenom) }}
+              </div>
+              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+            </div>
+
+            <div id="B5" class="flex flex-col items-center justify-center text-center">
+              <div class="text-[20px] lg:text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">
+                {{ getInitials(joueursB[4]?.nom, joueursB[4]?.prenom) }}
+              </div>
+              <div class="w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div id="centre-lvl3" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100px] h-[100px] bg-white/30 rounded-full ">
+          <div id="centre-lvl2" class="absolute top-1/2 left-1/2 w-[50px] h-[50px] bg-white/70 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
+        </div>
+
+        <div id="ligne-centre" class="absolute top-1/2 left-0 w-full h-[2px] bg-white"></div>
+        <div id="centre-lvl1" class="absolute top-1/2 left-1/2 w-5 h-5 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
+
+      </div>
+
+      <div id="information"
+           class="relative md:w-[580px] md:h-[550px] bg-[url('./assets/styles/img/image-mesh-gradient.png')] rounded-[10px] shadow-[0_4px_10px_rgba(0,0,0,0.1)] p-5 font-sans border-2 border-white">
         <div class="sticky top-0 bg-black/40 p-2.5 rounded-[8px] shadow-[0_2px_10px_rgba(0,0,0,0.1)] z-[1]">
           <div class="flex justify-between items-center">
             <span class="text-2xl font-bold text-white uppercase">Équipe A</span>
@@ -12,7 +119,9 @@
           <p class="text-center text-sm text-white mt-1 font-bold">{{ formatDate(dateMatch) }} - {{ lieuMatch }}</p>
         </div>
         <div class="actions-container flex flex-col gap-2.5 max-h-[calc(100%-92px)] overflow-y-scroll">
-          <div class="flex items-center justify-center text-xl font-bold text-white my-3.5"><span class="flex-1 h-px bg-white mx-2.5"></span>Coup d'envoi<span class="flex-1 h-px bg-white mx-2.5"></span></div>
+          <div class="flex items-center justify-center text-xl font-bold text-white my-3.5"><span
+              class="flex-1 h-px bg-white mx-2.5"></span>Coup d'envoi<span class="flex-1 h-px bg-white mx-2.5"></span>
+          </div>
           <div
               v-for="action in actions"
               :key="action.minute"
@@ -20,90 +129,18 @@
               :class="{'self-start bg-white pl-4 border-l-4 border-l-green-200': action.equipe === 'A', 'self-end bg-white pr-4 border-r-4 border-r-green-800': action.equipe === 'B'}"
           >
             <span class="font-bold text-black">{{ action.minute }}'</span>
-            <span class="font-bold text-black">
-          {{ getInitials(action.buteur.nom, action.buteur.prenom) }}
-      </span>
-            <span v-if="action.passeur" class="italic text-gray-500">
-        (Assist: {{ getInitials(action.passeur.nom, action.passeur.prenom) }})
-      </span>
+            <span class="font-bold text-black">{{ getInitials(action.buteur.nom, action.buteur.prenom) }}</span>
+            <span v-if="action.passeur" class="italic text-gray-500">(Assist: {{
+                getInitials(action.passeur.nom, action.passeur.prenom)
+              }})</span>
           </div>
-          <div class="flex items-center justify-center text-xl font-bold text-white my-3.5"><span class="flex-1 h-px bg-white mx-2.5"></span>Fin du match<span class="flex-1 h-px bg-white mx-2.5"></span></div>
+          <div class="flex items-center justify-center text-xl font-bold text-white my-3.5"><span
+              class="flex-1 h-px bg-white mx-2.5"></span>Fin du match<span class="flex-1 h-px bg-white mx-2.5"></span>
+          </div>
         </div>
       </div>
 
-      <div class="relative w-[600px] bg-[#006400] border-2 border-white rounded-lg">
-        <div class="absolute top-0 w-[170px] h-full bg-white/20 absolute left-0">
-          <div class="flex flex-col justify-evenly h-[50%]">
-            <div class="flex flex-col items-center justify-center text-center">
-              <div class="w-[50px] h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-              <div class="text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">{{ getInitials(joueursA[0]?.nom, joueursA[0]?.prenom) }}</div> <!-- A1 -->
-            </div>
-            <div class="flex flex-col items-center justify-center text-center">
-              <div class="w-[50px] h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-              <div class="text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">{{ getInitials(joueursA[1]?.nom, joueursA[1]?.prenom) }}</div> <!-- A2 -->
-            </div>
-          </div>
 
-          <div class="flex flex-col justify-evenly h-[50%]">
-            <div class="flex flex-col items-center justify-center text-center">
-              <div class="text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">{{ getInitials(joueursB[0]?.nom, joueursB[0]?.prenom) }}</div> <!-- B1 -->
-              <div class="w-[50px] h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-            </div>
-            <div class="flex flex-col items-center justify-center text-center">
-              <div class="text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">{{ getInitials(joueursB[1]?.nom, joueursB[1]?.prenom) }}</div> <!-- B2 -->
-              <div class="w-[50px] h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="absolute top-0 left-[150px] right-[150px] h-full flex flex-col justify-between">
-          <div class="border-2 border-t-0 border-white flex justify-center absolute top-0 relative w-[60%] h-[100px] mx-auto">
-            <div class="flex flex-col items-center justify-center text-center">
-              <div class="w-[50px] h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-              <div class="text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">{{ getInitials(joueursA[2]?.nom, joueursA[2]?.prenom) }}</div> <!-- A3 -->
-            </div>
-          </div>
-          <div class="absolute left-0 top-[35%] text-2xl font-bold uppercase text-white/20 text-center w-full" >Equipe A</div>
-          <div class="absolute left-0 bottom-[35%] text-2xl font-bold uppercase text-white/20 text-center w-full" >Equipe B</div>
-          <div class="border-2 border-b-0 border-white absolute bottom-0 relative w-[60%] h-[100px] mx-auto">
-            <div class="flex flex-col items-center justify-center text-center">
-              <div class="text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">{{ getInitials(joueursB[2]?.nom, joueursB[2]?.prenom) }}</div> <!-- B3 -->
-              <div class="w-[50px] h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="absolute top-0 w-[170px] h-full bg-white/20 absolute right-0">
-          <div class="flex flex-col justify-evenly h-[50%]">
-            <div class="flex flex-col items-center justify-center text-center">
-              <div class="w-[50px] h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-              <div class="text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">{{ getInitials(joueursA[3]?.nom, joueursA[3]?.prenom) }}</div> <!-- A4 -->
-            </div>
-            <div class="flex flex-col items-center justify-center text-center">
-              <div class="w-[50px] h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-              <div class="text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">{{ getInitials(joueursA[4]?.nom, joueursA[4]?.prenom) }}</div> <!-- A5 -->
-            </div>
-          </div>
-
-          <div class="flex flex-col justify-evenly h-[50%]">
-            <div class="flex flex-col items-center justify-center text-center">
-              <div class="text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">{{ getInitials(joueursB[3]?.nom, joueursB[3]?.prenom) }}</div> <!-- B4 -->
-              <div class="w-[50px] h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-            </div>
-            <div class="flex flex-col items-center justify-center text-center">
-              <div class="text-[26px] font-bold text-white font-sans capitalize tracking-[1px]">{{ getInitials(joueursB[4]?.nom, joueursB[4]?.prenom) }}</div> <!-- B5 -->
-              <div class="w-[50px] h-[50px] bg-[#59b53f] rounded-full mb-2 shadow-[0_0_10px_rgba(0,0,0,0.2)]"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100px] h-[100px] bg-white/30 rounded-full">
-          <div class="absolute top-1/2 left-1/2 w-[50px] h-[50px] bg-white/70 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
-        </div>
-
-        <div class="absolute top-1/2 left-0 w-full h-[2px] bg-white"></div>
-        <div class="absolute top-1/2 left-1/2 w-5 h-5 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
-      </div>
     </div>
   </div>
 </template>
