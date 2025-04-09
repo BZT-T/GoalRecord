@@ -1,7 +1,6 @@
 <template>
   <div class="overflow-hidden"> <!-- c'est le qui doit prendre l'espace restant-->
-    <!--<button class="button-53 bg-[#006400] border-0 text-white flex justify-center items-center font-sans text-[1rem] font-bold leading-[1.75rem] p-[0.75rem_1.65rem] relative text-center text-black border-b-2 max-w-[460px] w-full cursor-pointer transform rotate-[-2deg] select-none -webkit-select-none touch-manipulation m-2.5 focus:outline-none hover:after:border-white hover:after:bottom-[2px] hover:after:left-[2px] md:p-[0.75rem_3rem] md:text-[1.25rem]" @click="goBack" role="button">Retour</button>
-    --><div class="flex flex-col items-center text-white min-h-screen">
+    <div class="flex flex-col items-center text-white min-h-screen">
       <div class="table-container max-h-[450px] lg:max-h-[500px] overflow-y-auto lg:w-4/5 w-95/100 bg-[rgba(0,0,0,0.3)] rounded-[10px] shadow-lg">
         <table class="w-full border-collapse text-white">
           <thead>
@@ -65,9 +64,6 @@ export default {
     getGoalAssistAverage(nbBut, nbPasse, nbMatch) {
       return nbMatch === 0 ? 0 : ((+nbBut + +nbPasse) / nbMatch).toFixed(2);
     },
-    goBack() {
-      this.$router.go(-1);
-    },
     getPositionClass(index) {
       if (index === 0) {
         return "bg-[rgba(255,250,0,0.67)] text-black font-bold";
@@ -100,20 +96,4 @@ export default {
 .table-container::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.8);
 }
-
-.button-53::after {
-  content: '';
-  position: absolute;
-  border: 1px solid #ffffff;
-  bottom: 4px;
-  left: 4px;
-  width: calc(100% - 1px);
-  height: calc(100% - 1px);
-}
-
-.button-53:hover::after {
-  bottom: 2px;
-  left: 2px;
-}
-
 </style>
