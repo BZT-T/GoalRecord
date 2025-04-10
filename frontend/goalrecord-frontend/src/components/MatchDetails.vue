@@ -132,6 +132,9 @@
             <span v-if="action.passeur" class="italic text-gray-500">(Assist: {{
                 getInitials(action.passeur.nom, action.passeur.prenom)
               }})</span>
+            <span v-if="action.csc" class="ml-2 bg-red-200 text-red-800 text-xs font-bold px-2 py-0.5 rounded">
+              (CSC)
+            </span>
           </div>
           <div class="flex items-center justify-center text-xl font-bold text-white my-3.5"><span
               class="flex-1 h-px bg-white mx-2.5"></span>Fin du match<span class="flex-1 h-px bg-white mx-2.5"></span>

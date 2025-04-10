@@ -42,6 +42,7 @@ import apiClient from '@/services/api';
 
 export default {
   name: "ClassementJoueur",
+  components: {},
   data() {
     return {
       joueurs: []  // Liste vide qui sera remplie avec les joueurs venant du serveur

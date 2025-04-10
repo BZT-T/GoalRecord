@@ -61,7 +61,7 @@ class Match {
 
                 // 2ème requête : Récupérer les buteurs du match
                 const queryButeurs = `
-                    SELECT bm.idjoueurbuteur, j.nom as nom_buteur, j.prenom as prenom_buteur, bm.minutedubut, p.nom as nom_passeur, p.prenom as prenom_passeur
+                    SELECT bm.idjoueurbuteur, j.nom as nom_buteur, j.prenom as prenom_buteur, bm.minutedubut, bm.csc, p.nom as nom_passeur, p.prenom as prenom_passeur
                     FROM public.buteurs_match AS bm
                     JOIN public.joueur AS j ON j.idjoueur = bm.idjoueurbuteur
                     LEFT OUTER JOIN public.joueur AS p ON p.idjoueur = bm.idjoueurpasseur
@@ -72,9 +72,9 @@ class Match {
                 const resultButeurs = await db.pool.query(queryButeurs, [id]);
 
                 // Ajouter les buteurs au match
-                // Ajouter les buteurs au match
                 match.actions = resultButeurs.rows.map(row => ({
                     minute: row.minutedubut,
+                    csc: row.csc,
                     buteur: {
                         idjoueur: row.idjoueurbuteur,
                         nom: row.nom_buteur,
@@ -92,9 +92,17 @@ class Match {
                     const buteurId = action.buteur.idjoueur;
 
                     if (match.joueursA.some(joueur => joueur.idjoueur === buteurId)) {
-                        action.equipe = 'A';
+                        if (action.csc){
+                            action.equipe = 'B';
+                        }else{
+                            action.equipe = 'A';
+                        }
                     } else if (match.joueursB.some(joueur => joueur.idjoueur === buteurId)) {
-                        action.equipe = 'B';
+                        if (action.csc){
+                            action.equipe = 'A';
+                        }else{
+                            action.equipe = 'B';
+                        }
                     } else {
                         action.equipe = 'Inconnue'; // Sécurité en cas d'erreur
                     }
@@ -192,11 +200,10 @@ class Match {
 
     static async ajouteButeur(idMatch, buts) {
         try {
-
             for (const but of buts) {
                 await db.pool.query(
-                    "INSERT INTO buteurs_match (idmatch, idjoueurbuteur, idjoueurpasseur, minutedubut) VALUES ($1, $2, $3, $4)",
-                    [idMatch, but.buteur, but.passeur || null, but.minute]
+                    "INSERT INTO buteurs_match (idmatch, idjoueurbuteur, idjoueurpasseur, minutedubut, csc) VALUES ($1, $2, $3, $4, $5)",
+                    [idMatch, but.buteur, but.passeur || null, but.minute, but.csc]
                 );
             }
 

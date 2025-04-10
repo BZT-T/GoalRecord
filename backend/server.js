@@ -99,7 +99,7 @@ app.post('/api/creer-match', async (req, res) => {
 app.post("/api/ajouter-buts", async (req, res) => {
     const { idMatch, buts } = req.body;
 
-    const resultat = Match.ajouteButeur(idMatch, buts)
+    const resultat = await Match.ajouteButeur(idMatch, buts)
 
     if (resultat) {
         res.status(201).json({ message: "Buts ajoutés avec succès !" });
