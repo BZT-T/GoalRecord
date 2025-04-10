@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[400px] mx-auto my-5 p-5 bg-[#f8f9fa] rounded-lg shadow-lg">
+  <div class="w-[800px] mx-auto my-5 p-5 bg-[#f8f9fa] rounded-lg shadow-lg">
     <h2 class="text-center text-[#28a745]">Créer un joueur</h2>
     <form @submit.prevent="creerJoueur">
       <div class="form-group">
