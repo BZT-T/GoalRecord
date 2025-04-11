@@ -202,8 +202,8 @@ class Match {
         try {
             for (const but of buts) {
                 await db.pool.query(
-                    "INSERT INTO buteurs_match (idmatch, idjoueurbuteur, idjoueurpasseur, minutedubut, csc) VALUES ($1, $2, $3, $4, $5)",
-                    [idMatch, but.buteur, but.passeur || null, but.minute, but.csc]
+                    "INSERT INTO buteurs_match (idmatch, idjoueurbuteur, idjoueurpasseur, minutedubut, csc, partiecorps, distance, cote) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+                    [idMatch, but.buteur, but.passeur || null, but.minute, but.csc, but.partiecorps, but.distance, but.cote]
                 );
             }
 

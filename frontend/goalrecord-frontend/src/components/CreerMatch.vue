@@ -80,62 +80,112 @@
     </div>
 
     <!-- Ajout des buteurs -->
-    <div v-if="afficherButeurs" class="bg-white p-6 rounded-lg text-black shadow-md mx-[150px] py-8">
-      <h2 class="text-xl font-bold mb-4">Ajouter des buteurs</h2>
+  <div v-if="afficherButeurs" class="bg-white p-6 rounded-lg text-black shadow-md mx-[150px] py-8">
+    <h2 class="text-xl font-bold mb-4">Ajouter des buteurs</h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="form-group flex flex-col">
-          <label class="mb-1 font-semibold">Buteur :</label>
-          <select v-model="nouveauBut.buteur" class="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500;">
-            <option v-for="joueur in equipeA.concat(equipeB)" :key="joueur.idjoueur" :value="joueur.idjoueur">
-              {{ joueur.nom }} {{ joueur.prenom }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group flex flex-col">
-          <label class="mb-1 font-semibold">Passeur (optionnel) :</label>
-          <select v-model="nouveauBut.passeur" class="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500;">
-            <option value="">Aucun</option>
-            <option v-for="joueur in equipeA.concat(equipeB)" :key="joueur.idjoueur" :value="joueur.idjoueur">
-              {{ joueur.nom }} {{ joueur.prenom }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group flex items-center gap-2 mt-2 col-span-full">
-          <input type="checkbox" id="csc" v-model="nouveauBut.csc" class="w-4 h-4">
-          <label for="csc" class="cursor-pointer font-medium">Contre son camp</label>
-        </div>
-
-        <div class="form-group flex flex-col col-span-full">
-          <label class="mb-1 font-semibold">Minute :</label>
-          <input type="number" v-model.number="nouveauBut.minute" min="1" max="90" class="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500;" />
-        </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Buteur -->
+      <div class="form-group flex flex-col">
+        <label class="mb-1 font-semibold">Buteur :</label>
+        <select v-model="nouveauBut.buteur" class="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500;">
+          <option v-for="joueur in equipeA.concat(equipeB)" :key="joueur.idjoueur" :value="joueur.idjoueur">
+            {{ joueur.nom }} {{ joueur.prenom }}
+          </option>
+        </select>
       </div>
 
-      <button
-          @click="ajouterBut"
-          class="mt-4 px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-md transition font-semibold"
-      >
-        Ajouter But
-      </button>
+      <!-- Passeur -->
+      <div class="form-group flex flex-col">
+        <label class="mb-1 font-semibold">Passeur (optionnel) :</label>
+        <select v-model="nouveauBut.passeur" class="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500;">
+          <option value="">Aucun</option>
+          <option v-for="joueur in equipeA.concat(equipeB)" :key="joueur.idjoueur" :value="joueur.idjoueur">
+            {{ joueur.nom }} {{ joueur.prenom }}
+          </option>
+        </select>
+      </div>
 
-      <ul class="mt-4 space-y-2">
-        <li v-for="(but, index) in buts" :key="index">
-          {{ afficherNomJoueur(but.buteur) }} ({{ but.minute }}')
-          <span v-if="but.passeur"> - passe de {{ afficherNomJoueur(but.passeur) }}</span>
-          <span class="text-red-500 cursor-pointer ml-2.5 hover:text-red-700" @click="supprimerBut(index)">❌</span>
-        </li>
-      </ul>
+      <!-- Type de but -->
+      <div class="form-group flex flex-col">
+        <label class="mb-1 font-semibold">Partie du corps :</label>
+        <select v-model="nouveauBut.partiecorps" class="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500;">
+          <option disabled value="">Sélectionner</option>
+          <option value="PD">Pied Droit</option>
+          <option value="PG">Pied Gauche</option>
+          <option value="T">Tête</option>
+          <option value="GD">Genou Gauche</option>
+          <option value="GG">Genou Droit</option>
+          <option value="A">Autre</option>
+        </select>
+      </div>
 
-      <button
-          @click="validerButs"
-          class="mt-4 px-6 py-2 bg-green-700 hover:bg-green-600 text-white rounded-md font-semibold transition"
-      >
-        Valider les buts
-      </button>
+      <!-- Distance -->
+      <div class="form-group flex flex-col">
+        <label class="mb-1 font-semibold">Distance :</label>
+        <select v-model="nouveauBut.distance" class="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500;">
+          <option disabled value="">Sélectionner</option>
+          <option value="MDT">Milieu De Terrain</option>
+          <option value="AS">Avant Surface</option>
+          <option value="S">Surface</option>
+          <option value="A">Autre</option>
+        </select>
+      </div>
+
+      <!-- Côté -->
+      <div class="form-group flex flex-col">
+        <label class="mb-1 font-semibold">Côté :</label>
+        <select v-model="nouveauBut.cote" class="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500;">
+          <option disabled value="">Sélectionner</option>
+          <option value="C">Centre</option>
+          <option value="D">Droit</option>
+          <option value="G">Gauche</option>
+          <option value="A">Autre</option>
+        </select>
+      </div>
+
+      <!-- CSC -->
+      <div class="form-group flex items-center gap-2 mt-2">
+        <input type="checkbox" id="csc" v-model="nouveauBut.csc" class="w-4 h-4">
+        <label for="csc" class="cursor-pointer font-medium">Contre son camp</label>
+      </div>
+
+      <!-- Minute -->
+      <div class="form-group flex flex-col col-span-full">
+        <label class="mb-1 font-semibold">Minute :</label>
+        <input type="number" v-model.number="nouveauBut.minute" min="1" max="90" class="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500;" />
+      </div>
     </div>
+
+    <!-- Ajouter But -->
+    <button
+        @click="ajouterBut"
+        class="mt-4 px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-md transition font-semibold"
+    >
+      Ajouter But
+    </button>
+
+    <!-- Liste des buts -->
+    <ul class="mt-4 space-y-2">
+      <li v-for="(but, index) in buts" :key="index">
+        {{ afficherNomJoueur(but.buteur) }} ({{ but.minute }}')
+        <span v-if="but.passeur"> - passe de {{ afficherNomJoueur(but.passeur) }}</span>
+        <span v-if="but.partiecorps" class="ml-2 text-sm text-gray-500">[{{ but.partiecorps }}]</span>
+        <span v-if="but.csc" class="italic text-gray-500 ml-2">(CSC)</span>
+        <span v-if="but.distance" class="italic text-gray-500 ml-2">{{ but.distance }}</span>
+        <span v-if="but.cote" class="italic text-gray-500 ml-2">{{ but.cote }}</span>
+        <span class="text-red-500 cursor-pointer ml-2.5 hover:text-red-700" @click="supprimerBut(index)">❌</span>
+      </li>
+    </ul>
+
+    <!-- Valider -->
+    <button
+        @click="validerButs"
+        class="mt-4 px-6 py-2 bg-green-700 hover:bg-green-600 text-white rounded-md font-semibold transition"
+    >
+      Valider les buts
+    </button>
+  </div>
+
 </template>
 
 <script>
@@ -154,7 +204,7 @@ export default {
       equipeB: [],
       idMatch: -1,
       afficherButeurs: false,
-      nouveauBut: { buteur: "", passeur: "", minute: null, csc: false },
+      nouveauBut: { buteur: "", passeur: "", minute: null, csc: false, partiecorps: '', distance: '', cote: '' },
       buts: [],
     };
   },
