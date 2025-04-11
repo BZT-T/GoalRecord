@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import apiClient from '@/services/api';
 
 export default {
   data() {
@@ -21,7 +21,7 @@ export default {
     };
   },
   mounted() {
-    axios.get('http://10.126.4.177:3000/api/saison-actuelle')
+    apiClient.get('saison-actuelle')
         .then(response => {
           console.log(response.data);
           this.saison = response.data;
